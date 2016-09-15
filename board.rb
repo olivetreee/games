@@ -22,8 +22,30 @@ class Board
    puts line.join("  ")
   end
 
-  def find_neighbors
-    
+  def find_neighbors(pos)
+    valid_neighbor_positions = neighbor_positions_bank(pos)
+    neighbors = valid_neighbor_positions.map do |neighbor_pos|
+      self[neighbor_pos]
+    end
+  end
+
+
+  def neighbor_positions_bank(pos)
+    indexs = (-1..1).to_a
+    bank = []
+    row,col = pos
+    indexs.each do |row_increment|
+      indexs.each do |col_increment|
+        next if row_increment == 0 && col_increment == 0
+        tentative_pos = [row + row_increment, col + col_increment]
+        bank << tentative_pos if valid_position?(tentative_pos)
+      end
+    end
+    bank
+  end
+
+  def valid_position?(pos)
+    pos.all? { |n| n.between?(0, @size - 1) }
   end
 
   def render

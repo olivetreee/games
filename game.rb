@@ -15,6 +15,7 @@ class Minesweeper
 
   def play_turn
     pos = gets.chomp
+    p @board.find_neighbors([8,8])
   end
 end
 

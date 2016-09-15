@@ -9,4 +9,5 @@ attr_reader :bomb
   end
 
 
+
 end
