@@ -1,3 +1,5 @@
+require_relative 'board'
+
 class Minesweeper
   def initialize(size)
     @board = Board.new(size)
@@ -14,4 +16,9 @@ class Minesweeper
   def play_turn
     pos = gets.chomp
   end
+end
+
+if __FILE__ == $PROGRAM_NAME
+  new_game = Minesweeper.new(9)
+  new_game.run
 end
