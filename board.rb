@@ -2,6 +2,8 @@ require_relative 'tile'
 
 class Board
 
+  attr_reader :size
+
   def initialize(size = 9)
     @grid = Array.new(size) do
       Array.new(size) { Tile.new([true, false].sample) }
@@ -17,8 +19,8 @@ class Board
   def print_columns_number
    line = ["  "]
    @size.times do |num|
-     extra_space = (num+1) < 10 ? " " : ""
-     line << "#{extra_space}#{num+1}"
+     extra_space = (num) < 10 ? " " : ""
+     line << "#{extra_space}#{num}"
    end
    puts line.join("  ")
   end
@@ -44,7 +46,7 @@ class Board
   def reveal_tile(position)
     @seen_tiles << position
     current_tile = self[position]
-    return if current_tile.bomb
+    return if current_tile.bomb || current_tile.flag
 
     neighbors = find_neighbors_positions(position)
     current_tile.value = count_neighbor_bombs(neighbors)
@@ -70,14 +72,27 @@ class Board
           line << self[position].value
         elsif self[position].bomb
           line << "B"
+        elsif self[position].flag
+          line << "F"
         else
           line << "_"
         end
       end
       line << ""
-      print_row_number(row_num+1)
+      print_row_number(row_num)
       puts line.join(" | ")
     end
+  end
+
+  def over?
+    unshown_tiles = []
+    @grid.length.times do |row_idx|
+      @grid[row_idx].each do |tile|
+        unshown_tiles << tile if !tile.show
+      end
+    end
+    # unshown_tiles = @grid.select {|tile| !tile.show}
+    unshown_tiles.all? {|tile| tile.bomb}
   end
 
   def [](pos)
