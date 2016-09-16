@@ -45,14 +45,19 @@ class Board
     @seen_tiles << position
     current_tile = self[position]
     return if current_tile.bomb
-    neighbors = find_neighbors(position)
-    current_tile.value = count_neighbor_bombs(neighbors)
 
+    neighbors = find_neighbors_positions(position)
+    current_tile.value = count_neighbor_bombs(neighbors)
+    current_tile.show = true
+
+    return if current_tile.value > 0
+    neighbors.each do |neighbor|
+      reveal_tile(neighbor) unless @seen_tiles.include?(neighbor)
+    end
   end
 
   def count_neighbor_bombs(neighbors)
-
-
+    neighbors.count { |position| self[position].bomb }
   end
 
   def render
@@ -61,10 +66,12 @@ class Board
       line = [""]
       row.each_index do |column_num|
         position = [row_num,column_num]
-        if self[position].bomb
+        if self[position].show
+          line << self[position].value
+        elsif self[position].bomb
           line << "B"
         else
-          line << "n"
+          line << "_"
         end
       end
       line << ""
