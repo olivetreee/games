@@ -7,6 +7,7 @@ class Board
       Array.new(size) { Tile.new([true, false].sample) }
     end
     @size = size
+    @seen_tiles = []
   end
 
   def print_row_number(row)
@@ -22,15 +23,7 @@ class Board
    puts line.join("  ")
   end
 
-  def find_neighbors(pos)
-    valid_neighbor_positions = neighbor_positions_bank(pos)
-    neighbors = valid_neighbor_positions.map do |neighbor_pos|
-      self[neighbor_pos]
-    end
-  end
-
-
-  def neighbor_positions_bank(pos)
+  def find_neighbors_positions(pos)
     indexs = (-1..1).to_a
     bank = []
     row,col = pos
@@ -46,6 +39,20 @@ class Board
 
   def valid_position?(pos)
     pos.all? { |n| n.between?(0, @size - 1) }
+  end
+
+  def reveal_tile(position)
+    @seen_tiles << position
+    current_tile = self[position]
+    return if current_tile.bomb
+    neighbors = find_neighbors(position)
+    current_tile.value = count_neighbor_bombs(neighbors)
+
+  end
+
+  def count_neighbor_bombs(neighbors)
+
+
   end
 
   def render

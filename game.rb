@@ -15,7 +15,14 @@ class Minesweeper
 
   def play_turn
     pos = gets.chomp
-    p @board.find_neighbors([8,8])
+    pos = [0,0]
+    if @board[position].bomb
+      puts "You lost"
+    end
+    neighbors = @board.find_neighbors_positions(pos)
+    neighbors.each do |neighbor|
+      @board.reveal_tile(neighbor) unless @board[neighbor].bomb
+    end
   end
 end
 
