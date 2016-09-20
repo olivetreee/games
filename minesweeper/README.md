@@ -1,7 +1,7 @@
 # Minesweeper for terminal
 
 ## Info
-This is a project I worked on with [@mnsapits](https://github.com/mnsapits). We built this over one day during the first week at AppAcademy. The main goal was to get more comfortable with recursion calls.
+This is a simple project I worked on with <a href="https://github.com/mnsapits" target="_blank">@mnsapits</a>. We built this over one day during the first week at AppAcademy. The main goal was to get more comfortable with recursion calls.
 
 ## Running
 Just clone the repo and run `ruby game.rb`.
