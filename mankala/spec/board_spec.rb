@@ -52,7 +52,7 @@ describe Board do
 
   describe "#make_move" do
     before(:each) do
-      board.make_move(0, "James")
+      board.make_move(0, "Erica")
     end
 
     it "empties the selected cup" do
@@ -70,6 +70,7 @@ describe Board do
     end
 
     it "doesn't place stones in the opponent's cup" do
+      # not a starting move; assumed to be an automatic move after finishing a play on this cup full of stones
       board.make_move(12, "Erica")
       expect(board.cups[13]).to be_empty
       expect(board.cups[3]).to eq( six_stone_cup )
@@ -105,14 +106,14 @@ describe Board do
   end
 
 
-  describe "#cups_empty?" do
-    it "returns true if all of the non-point cups are empty" do
-      [0..5].each { |idx| board.cups[idx] = [] }
-      expect(board.cups_empty?).to be(true)
+  describe "#one_side_empty?" do
+    it "returns true if one side of non-point cups is empty" do
+      (0..5).each { |idx| board.cups[idx] = [] }
+      expect(board.one_side_empty?).to be(true)
     end
 
-    it "returns false if all of the non-point cups are not empty" do
-      expect(board.cups_empty?).to be(false)
+    it "returns false if neither side of non-point cups is empty" do
+      expect(board.one_side_empty?).to be(false)
     end
   end
 
