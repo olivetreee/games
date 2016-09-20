@@ -1,15 +1,23 @@
+require 'byebug'
+require 'colorize'
 require_relative 'tile'
 
 class Board
 
   attr_reader :size
+  attr_accessor :cheat
 
-  def initialize(size = 9)
+  def initialize(size = 9, difficulty = 2)
+    true_array = Array.new(difficulty,true)
+    false_array = Array.new(15-difficulty,false)
+    difficulty_array = true_array + false_array
+    # byebug
     @grid = Array.new(size) do
-      Array.new(size) { Tile.new([true, false].sample) }
+      Array.new(size) { Tile.new(difficulty_array.sample) }
     end
     @size = size
     @seen_tiles = []
+    @cheat = false
   end
 
   def print_row_number(row)
@@ -69,11 +77,11 @@ class Board
       row.each_index do |column_num|
         position = [row_num,column_num]
         if self[position].show
-          line << self[position].value
-        elsif self[position].bomb
-          line << "B"
+          line << "#{self[position].value}".green
+        elsif self[position].bomb && @cheat
+          line << "B".red
         elsif self[position].flag
-          line << "F"
+          line << "F".blue
         else
           line << "_"
         end

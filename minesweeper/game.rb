@@ -2,20 +2,40 @@ require_relative 'board'
 require 'byebug'
 
 class Minesweeper
-  def initialize(size)
-    @board = Board.new(size)
+  def initialize(size,difficulty)
+    @board = Board.new(size,difficulty)
+
+  end
+
+  def self.new_game
+    system("clear")
+    begin
+    puts "Please input difficulty level (1-10):"
+    difficulty = gets.chomp
+    # byebug
+    difficulty = Integer(difficulty)
+    raise unless (1..10).cover?(difficulty)
+    rescue
+      retry
+    end
+
+  Minesweeper.new(9,difficulty).run
 
   end
 
   def run
+
     found_bomb = false
 
     until found_bomb || game_over?
+      system("clear")
       @board.render
       found_bomb = play_turn
     end
-
-    puts found_bomb ? "You hit bomb." : "You win!"
+    system("clear")
+    @board.cheat = true
+    @board.render
+    puts found_bomb ? "You hit a bomb." : "You win!"
   end
 
   def play_turn
@@ -31,7 +51,8 @@ class Minesweeper
     choice = input.pop.downcase
     position = input.map(&:to_i)
 
-    if @board[position].bomb
+    if @board[position].bomb && choice != "f" && !@board[position].flag
+      @board.reveal_tile(position)
       return true
     end
 
@@ -71,6 +92,17 @@ class Minesweeper
 end
 
 if __FILE__ == $PROGRAM_NAME
-  new_game = Minesweeper.new(9)
-  new_game.run
+
+  Minesweeper.new_game
+  # begin
+  #   puts "Please input difficulty level (1-10):"
+  #   difficulty = gets.chomp
+  #   # byebug
+  #   difficulty = Integer(difficulty)
+  # rescue "Please input a valid difficulty level (1-10):"
+  #   retry
+  # end
+  #
+  # new_game = Minesweeper.new(9,difficulty)
+  # new_game.run
 end
