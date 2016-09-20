@@ -29,8 +29,8 @@ class Mancala
 
         begin
           start_pos = current_player.prompt
-          @board.valid_move?(start_pos)
           start_pos -= 1 if start_pos <= 6
+          @board.valid_move?(start_pos)
         rescue Exception => e
           puts e.message
         retry
@@ -44,7 +44,7 @@ class Mancala
   end
 
   def won?
-    @board.cups_empty?
+    @board.one_side_empty?
   end
 
   def winner_message
@@ -61,4 +61,10 @@ class Mancala
     puts "12  11  10   9   8   7"
     puts " 1   2   3   4   5   6"
   end
+end
+
+if __FILE__ == $PROGRAM_NAME
+  game = Mancala.new("Bun", "Da")
+  game.play
+
 end
