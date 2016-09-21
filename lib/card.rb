@@ -1,3 +1,5 @@
+require 'byebug'
+
 class Card
   attr_reader :value, :suit
 
@@ -38,6 +40,12 @@ class Card
 
   def to_s
     "#{STRING_VALUES[@value]} of #{@suit.to_s.capitalize}s"
+  end
+
+  def <=>(other_card)
+    a = valid_values.index(@value)
+    b = valid_values.index(other_card.value)
+    a <=> b
   end
 
   private
