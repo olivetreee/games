@@ -1,6 +1,9 @@
 require_relative 'card'
+require 'singleton'
 
 class Deck
+  include Singleton
+
   attr_reader :cards
 
   def initialize
