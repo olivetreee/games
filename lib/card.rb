@@ -1,7 +1,7 @@
 require 'byebug'
 
 class Card
-  attr_reader :value, :suit
+  attr_reader :value, :suit, :numeric_value
 
   STRING_VALUES = {
     "A" => "Ace",
@@ -20,6 +20,7 @@ class Card
   }
 
   def initialize(value, suit)
+    @numeric_value = value + 1
     self.value = value
     self.suit = suit
   end
@@ -43,9 +44,7 @@ class Card
   end
 
   def <=>(other_card)
-    a = valid_values.index(@value)
-    b = valid_values.index(other_card.value)
-    a <=> b
+    @numeric_value <=> other_card.numeric_value
   end
 
   private
