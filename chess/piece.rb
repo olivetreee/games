@@ -1,4 +1,5 @@
 require 'colorize'
+require 'byebug'
 class Piece
 
 PIECE_IN_UNICODE = {
@@ -10,18 +11,34 @@ PIECE_IN_UNICODE = {
   pawn:	"♙"
 }
 
-  attr_reader :name
+  attr_reader :name, :value
+  attr_accessor :board, :position
   def initialize(name, color, board, position)
     @color = color
+    @name = name
     if color == "white"
-      @name = PIECE_IN_UNICODE[name].white
+      @value = PIECE_IN_UNICODE[name].white
     else
-      @name = PIECE_IN_UNICODE[name].blue
+      @value = PIECE_IN_UNICODE[name].blue
     end
     @board = board
     @position = position
   end
 
+  def color
+    @color
+  end
+
+  def valid_moves
+    possible_moves = self.moves
+    possible_moves.reject { |pos| move_into_check?(pos) }
+  end
+
+  def move_into_check?(pos)
+    new_board = @board.deep_dup
+    new_board.move(new_board[self.position], pos)
+    new_board.in_check?(self.color)
+  end
 
 end
 
@@ -47,9 +64,16 @@ class SlidingPiece < Piece
     differences = [[1, 1], [1, -1], [-1, 1], [-1, -1]]
     differences.each do |diff|
       new_pos = @position.map.with_index {|pos, i| pos+diff[i]}
-      while @board.is_inside_board?(new_pos) && @board.is_null_piece?(new_pos)
+
+      while @board.is_inside_board?(new_pos)
+        break if !@board.is_null_piece?(new_pos) &&
+          !@board.is_opposing_piece?(new_pos,self.color)
+
         possible_positions.push(new_pos)
+        break if @board.is_opposing_piece?(new_pos,self.color)
+
         new_pos = new_pos.map.with_index {|pos, i| pos+diff[i]}
+
       end
     end
     possible_positions
@@ -60,9 +84,16 @@ class SlidingPiece < Piece
     differences = [[0, 1], [0, -1], [1, 0], [-1, 0]]
     differences.each do |diff|
       new_pos = @position.map.with_index {|pos, i| pos+diff[i]}
-      while @board.is_inside_board?(new_pos) && @board.is_null_piece?(new_pos)
+
+      while @board.is_inside_board?(new_pos)
+        break if !@board.is_null_piece?(new_pos) &&
+          !@board.is_opposing_piece?(new_pos,self.color)
+
         possible_positions.push(new_pos)
+        break if @board.is_opposing_piece?(new_pos,self.color)
+
         new_pos = new_pos.map.with_index {|pos, i| pos+diff[i]}
+
       end
     end
     possible_positions
@@ -120,7 +151,8 @@ class Knight < SteppingPiece
     differences = [[-2, 1], [-1, 2], [1,2], [2,1], [2, -1], [1,-2], [-1, -2], [-2, -1]]
     differences.each do |diff|
       new_pos = @position.map.with_index {|pos, i| pos+diff[i]}
-      if @board.is_inside_board?(new_pos) && @board.is_null_piece?(new_pos)
+      if @board.is_inside_board?(new_pos) &&
+          (@board.is_null_piece?(new_pos) || @board.is_opposing_piece?(new_pos, self.color))
         possible_moves.push(new_pos)
       end
     end
@@ -139,7 +171,8 @@ class King < SteppingPiece
     differences = [[1, 1], [1, -1], [-1, 1], [-1, -1], [0, 1], [0, -1], [1, 0], [-1, 0]]
     differences.each do |diff|
       new_pos = @position.map.with_index {|pos, i| pos+diff[i]}
-      if @board.is_inside_board?(new_pos) && @board.is_null_piece?(new_pos)
+      if @board.is_inside_board?(new_pos) &&
+          (@board.is_null_piece?(new_pos) || @board.is_opposing_piece?(new_pos, self.color))
         possible_moves.push(new_pos)
       end
     end
@@ -154,6 +187,7 @@ class Pawn < Piece
 
   def moves
     difference = self.color == "white" ? [-1,0] : [1,0]
+    diagonal_difference = self.color == "white" ? [[-1,-1], [-1, 1]] : [[1,1], [1, -1]]
     possible_moves = []
 
     #Not writing any code for taking another piece (i.e. moving diagonally)
@@ -162,7 +196,11 @@ class Pawn < Piece
     if @board.is_inside_board?(new_pos) && @board.is_null_piece?(new_pos)
       possible_moves.push(new_pos)
     end
-
+    diagonal_difference.each do |diff|
+      new_pos = @position.map.with_index {|pos, i| pos+diff[i]}
+      possible_moves.push(new_pos) if @board.is_inside_board?(new_pos) &&
+      @board.is_opposing_piece?(new_pos, self.color)
+    end
     possible_moves
 
   end
