@@ -20,7 +20,7 @@ One of the best traits of the game is its simplicity. Therefore, adding features
 ## Wireframes
 The game consists of a single screen, where the grid is shown, as well as difficulty picker and basic instructions.
 
-![2048 wireframe](../2048.png)
+![2048 wireframe](./2048.png)
 
 
 ## Technologies
@@ -71,7 +71,11 @@ Although the original game doesn't have some of these features, their addition w
 
 ### Difficulties
 4 levels are planned:
+
 **Easy:** The game ends at 512 instead of 2048;
+
 **Normal:** The game ends at 2048;
+
 **Hard:** Same as Normal + At random times, instead of spawning a 2 or 4 tile, a bomb tile appears. It will eliminate whichever tile it touches after the next move;
+
 **Impossible:** Same as Hard + Arrow keys commands are reversed
