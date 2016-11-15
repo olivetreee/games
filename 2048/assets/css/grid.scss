@@ -1,0 +1,23 @@
+.grid-container {
+  border: solid 2px #7f8c8d;
+  width: 400px;
+  margin: auto;
+  border-radius: 5px;
+}
+
+.grid-row {
+  width: 400px;
+  border-top: solid 2px #7f8c8d;
+  box-sizing: border-box;
+  border-bottom: solid 2px #7f8c8d;
+}
+
+.grid-cell {
+  height: 100px;
+  width: 100px;
+  float: left;
+  background-color: #bdc3c7;
+  border-left: solid 2px #7f8c8d;
+  border-right: solid 2px #7f8c8d;
+  box-sizing: border-box;
+}
