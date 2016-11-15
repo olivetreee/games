@@ -11,6 +11,7 @@ function Tile (pos) {
 
 Tile.prototype.setPosition = function(newPos) {
   this.$html.removeClass(`pos-${this.pos}`).addClass(`pos-${newPos}`);
+  this.pos = newPos;
 }
 
 module.exports = Tile;

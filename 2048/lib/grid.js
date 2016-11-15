@@ -3,8 +3,7 @@ import Tile from "./tile";
 
 class Grid {
 
-  constructor(game, $gridEl) {
-    this.game = game;
+  constructor($gridEl) {
     this.$gridEl = $gridEl;
 
     this.setupGrid();
@@ -14,9 +13,19 @@ class Grid {
     this.filledPositions = {};
 
     // Spawns the first 2 tiles
-    const t1 = this.spawnTile();
-    window.t1 = t1;
     this.spawnTile();
+    this.spawnTile();
+
+    // TESTING
+    // const t1 = this.spawnTile();
+    // const t2 = this.spawnTile();
+
+    // this.filledPositions[t1.pos] = false;
+    // this.filledPositions[t2.pos] = false;
+    // t1.setPosition('24');
+    // t2.setPosition('34');
+    // this.filledPositions["24"] = t1;
+    // this.filledPositions["34"] = t2;
   }
 
   setupGrid() {
@@ -71,35 +80,76 @@ class Grid {
   }
 
 
-  moveTiles(direction) {
+  moveTiles(key) {
+    const {increment, startAt, direction} = this.defineSearchParams(key);
+
     let row, col, pos;
-    for (let cell = 0; cell < 16; cell++) {
-      row = Math.floor(cell%4) + 1;
-      col = Math.floor(cell/4) + 1;
+    for (let cell = 0; cell < 16 ; cell++) {
+      // The way we run through teh cells depends on startAt and increment on the following way:
+      // rowNum = startAt + (increment * (cell%4))
+
+      if (direction === "V") {
+        row = startAt + (increment * (cell%4));
+        col = Math.floor(cell/4) + 1;
+      } else {
+        col = startAt + (increment * (cell%4));
+        row = Math.floor(cell/4) + 1;
+      };
+
       pos = this.posToString(row,col);
-      console.log("checking @ ", pos);
 
       // If there's NO tile on pos, look for the next tile to move it into the empty pos
-      if (!this.filledPositions[pos]) this.searchAndMove(row, col);
+      if (!this.filledPositions[pos]) this.searchAndMove(row, col, increment);
 
     }
     //direction can be "UP", "DOWN", "LEFT", "RIGHT"
   }
 
+  defineSearchParams(key) {
+    let params = {};
+    switch (key) {
+      case "UP":
+        params.increment = 1;
+        params.startAt = 1;
+        params.direction = "V";
+        break;
+      case "DOWN":
+        params.increment = -1;
+        params.startAt = 4;
+        params.direction = "V";
+        break;
+      case "LEFT":
+        params.increment = 1;
+        params.startAt = 1;
+        params.direction = "H";
+        break;
+      case "RIGHT":
+        params.increment = -1;
+        params.startAt = 4;
+        params.direction = "H";
+        break;
+      default:
+        console.log("Invalid direction param");
+    }
 
-  searchAndMove(row, col) {
-    let pos = this.posToString(row,col);
+    return params;
+  }
+
+
+  searchAndMove(row, col, increment) {
+    let emptyPos = this.posToString(row,col);
     // debugger
-    for (let oldRow = row+1; oldRow < 5; oldRow++) {
+    let oldRow = row+increment;
+    while ( oldRow > 0 && oldRow < 5) {
       let oldPos = this.posToString(oldRow,col);
       if (this.filledPositions[oldPos]) {
-        console.log("tile found at ", oldPos, this.filledPositions[oldPos]);
-        this.filledPositions[pos] = this.filledPositions[oldPos];
-        this.filledPositions[pos].setPosition(pos);
+        this.filledPositions[emptyPos] = this.filledPositions[oldPos];
+        this.filledPositions[emptyPos].setPosition(emptyPos);
         this.filledPositions[oldPos] = false;
         return;
       }
-    };
+      oldRow+= increment;
+    }
   }
 
 
