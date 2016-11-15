@@ -1,1 +1,12 @@
+* Ruby's byebug log
 .byebug_history
+
+* Ignore bundled files
+*bundle.js*
+
+* Ignore webpack installed pkgs
+*node_modules/
+
+* Ignore Apple sys file
+*.DS_Store
+
