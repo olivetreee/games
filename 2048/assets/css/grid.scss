@@ -1,14 +1,15 @@
 .grid-container {
   border: solid 2px #7f8c8d;
-  width: 400px;
+  width: 416px;
   margin: auto;
   border-radius: 5px;
+  position: relative;
 }
 
 .grid-row {
-  width: 400px;
+  width: 416px;
   border-top: solid 2px #7f8c8d;
-  box-sizing: border-box;
+  // box-sizing: border-box;
   border-bottom: solid 2px #7f8c8d;
 }
 
@@ -19,5 +20,5 @@
   background-color: #bdc3c7;
   border-left: solid 2px #7f8c8d;
   border-right: solid 2px #7f8c8d;
-  box-sizing: border-box;
+  // box-sizing: border-box;
 }

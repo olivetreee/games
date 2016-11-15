@@ -7,16 +7,18 @@ class Grid {
     this.game = game;
     this.$gridEl = $gridEl;
 
-    this.drawGrid();
+    this.setupGrid();
 
+    // POJO with wither undefined, false or a tile object
     this.filledPositions = {};
 
     // Spawns the first 2 tiles
-    this.spawnTile();
+    const t1 = this.spawnTile();
+    window.t1 = t1;
     this.spawnTile();
   }
 
-  drawGrid() {
+  setupGrid() {
     const $gridContainer = $("<div class='grid-container'>");
 
     let $gridRow;
@@ -26,15 +28,30 @@ class Grid {
       for (let cell = 1; cell < 5; cell++) {
         let $gridCell = $("<div class='grid-cell'>");
         $gridRow.append($gridCell);
+        this.filledPositions[this.posToString(row,cell)] = {};
       }
       $gridContainer.append($gridRow);
     }
     this.$gridEl.append($gridContainer);
+
+    const $tileContainer = $("<div class='tile-container'>");
+    $(".grid-container").append($tileContainer);
   }
 
   spawnTile() {
     const pos = this.randomPosition();
-    this.filledPositions[pos] = true;
+    const newTile = new Tile(pos);
+
+    $(".tile-container").append(newTile.$html);
+
+    this.filledPositions[pos].tile = newTile;
+    this.filledPositions[pos].newPosition = pos;
+
+    return newTile;
+  }
+
+  moveTiles(direction) {
+    //direction can be "UP", "DOWN", "LEFT", "RIGHT"
   }
 
 
@@ -51,7 +68,7 @@ class Grid {
   }
 
   positionTaken(r,c) {
-    return this.filledPositions[this.posToString(r,c)];
+    return this.filledPositions[this.posToString(r,c)].tile;
   }
 
   posToString(r,c) {
