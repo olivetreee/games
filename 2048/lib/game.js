@@ -9,6 +9,8 @@ class Game {
 
   constructor(grid) {
 
+    this.grid = grid;
+
     this.keyCodes = {
       38: "UP",
       40: "DOWN",
@@ -16,10 +18,23 @@ class Game {
       39: "RIGHT"
     }
 
-    $("body").keydown( event => {
-      grid.moveTiles(this.keyCodes[event.which]);
-    });
+    $("body").keydown( event => this.playRound(event));
 
+  }
+
+  playRound() {
+    console.log("play");
+    const keyPressed = this.keyCodes[event.which];
+    if (keyPressed) this.grid.moveTiles(keyPressed);
+
+    window.setTimeout(() => {
+      if (this.grid.isGridFull()) this.gameOver();
+    }, 200);
+  }
+
+  gameOver() {
+    console.log("Game over");
+    $("body").off("keydown");
   }
 
 }

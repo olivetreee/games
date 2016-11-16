@@ -12,9 +12,13 @@ class Grid {
     // this.filledPositions['24'] = TileObj
     this.filledPositions = {};
 
+    // To check if board is full
+    this.tileCount = 0;
+
     // Spawns the first 2 tiles
     this.spawnTile();
     this.spawnTile();
+
 
     // TESTING
     // const t1 = this.spawnTile();
@@ -51,10 +55,14 @@ class Grid {
     const pos = this.randomPosition();
     const newTile = new Tile(pos);
 
-    $(".tile-container").append(newTile.$html);
-
     this.filledPositions[pos] = newTile;
-    // this.filledPositions[pos].newPosition = pos;
+
+    this.tileCount++;
+
+    // Wait for the move animation to finish to add the tile to the visual grid. It has to be after this.tileCount or the player might make a new move during the timeout period, resulting in a crash.
+    window.setTimeout(() => {
+      $(".tile-container").append(newTile.$html);
+    }, 200);
 
     return newTile;
   }
@@ -81,11 +89,12 @@ class Grid {
 
 
   moveTiles(key) {
+    //direction can be "UP", "DOWN", "LEFT", "RIGHT"
     const {increment, startAt, direction} = this.defineSearchParams(key);
 
     let row, col, pos;
     for (let cell = 0; cell < 16 ; cell++) {
-      // The way we run through teh cells depends on startAt and increment on the following way:
+      // The way we run through the cells depends on startAt and increment on the following way:
       // rowNum = startAt + (increment * (cell%4))
 
       if (direction === "V") {
@@ -99,10 +108,11 @@ class Grid {
       pos = this.posToString(row,col);
 
       // If there's NO tile on pos, look for the next tile to move it into the empty pos
-      if (!this.filledPositions[pos]) this.searchAndMove(row, col, increment);
-
+      if (!this.filledPositions[pos]) this.searchAndMove(row, col, increment, direction);
     }
-    //direction can be "UP", "DOWN", "LEFT", "RIGHT"
+
+    this.spawnTile()
+
   }
 
   defineSearchParams(key) {
@@ -136,20 +146,40 @@ class Grid {
   }
 
 
-  searchAndMove(row, col, increment) {
+  searchAndMove(row, col, increment, direction) {
     let emptyPos = this.posToString(row,col);
     // debugger
-    let oldRow = row+increment;
-    while ( oldRow > 0 && oldRow < 5) {
-      let oldPos = this.posToString(oldRow,col);
-      if (this.filledPositions[oldPos]) {
-        this.filledPositions[emptyPos] = this.filledPositions[oldPos];
-        this.filledPositions[emptyPos].setPosition(emptyPos);
-        this.filledPositions[oldPos] = false;
-        return;
+
+    if (direction === "V") {
+      let oldRow = row+increment;
+      while ( oldRow > 0 && oldRow < 5) {
+        let oldPos = this.posToString(oldRow,col);
+        if (this.filledPositions[oldPos]) {
+          this.filledPositions[emptyPos] = this.filledPositions[oldPos];
+          this.filledPositions[emptyPos].setPosition(emptyPos);
+          this.filledPositions[oldPos] = false;
+          return;
+        }
+        oldRow+= increment;
       }
-      oldRow+= increment;
+    } else {
+      let oldCol = col+increment;
+      while ( oldCol > 0 && oldCol < 5) {
+        let oldPos = this.posToString(row, oldCol);
+        if (this.filledPositions[oldPos]) {
+          this.filledPositions[emptyPos] = this.filledPositions[oldPos];
+          this.filledPositions[emptyPos].setPosition(emptyPos);
+          this.filledPositions[oldPos] = false;
+          return;
+        }
+        oldCol+= increment;
+      }
     }
+
+  }
+
+  isGridFull() {
+    return (this.tileCount === 16);
   }
 
 
