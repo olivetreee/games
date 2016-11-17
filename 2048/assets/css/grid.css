@@ -4,15 +4,12 @@
   margin: auto;
   border-radius: 5px;
   position: relative;
-  z-index: -2;
-}
+  z-index: -2; }
 
 .grid-row {
   width: 416px;
   border-top: solid 2px #7f8c8d;
-  // box-sizing: border-box;
-  border-bottom: solid 2px #7f8c8d;
-}
+  border-bottom: solid 2px #7f8c8d; }
 
 .grid-cell {
   height: 100px;
@@ -20,6 +17,6 @@
   float: left;
   background-color: #bdc3c7;
   border-left: solid 2px #7f8c8d;
-  border-right: solid 2px #7f8c8d;
-  // box-sizing: border-box;
-}
+  border-right: solid 2px #7f8c8d; }
+
+/*# sourceMappingURL=grid.css.map */

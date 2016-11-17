@@ -1,5 +1,6 @@
 import $ from "jquery";
 import Tile from "./tile";
+import { keys } from "lodash";
 
 class Grid {
 
@@ -11,25 +12,37 @@ class Grid {
     // POJO:
     // this.filledPositions['24'] = TileObj
     this.filledPositions = {};
+    this.mergedTiles = {};
 
     // To check if board is full
     this.tileCount = 0;
 
     // Spawns the first 2 tiles
-    this.spawnTile();
-    this.spawnTile();
+    // this.spawnTile();
+    // this.spawnTile();
 
 
     // TESTING
-    // const t1 = this.spawnTile();
-    // const t2 = this.spawnTile();
+    const t1 = this.spawnTile();
+    const t2 = this.spawnTile();
+    const t3 = this.spawnTile();
 
-    // this.filledPositions[t1.pos] = false;
-    // this.filledPositions[t2.pos] = false;
-    // t1.setPosition('24');
-    // t2.setPosition('34');
-    // this.filledPositions["24"] = t1;
-    // this.filledPositions["34"] = t2;
+    window.t1 = t1;
+    window.t2 = t2;
+    window.t3 = t2;
+
+    this.filledPositions[t1.position] = false;
+    this.filledPositions[t2.position] = false;
+    this.filledPositions[t3.position] = false;
+    t1.setPosition('11');
+    t1.setValue(2);
+    t2.setPosition('13');
+    t2.setValue(2);
+    t3.setPosition('14');
+    t3.setValue(4);
+    this.filledPositions["11"] = t1;
+    this.filledPositions["13"] = t2;
+    this.filledPositions["14"] = t3;
   }
 
   setupGrid() {
@@ -87,10 +100,77 @@ class Grid {
     return `${r}${c}`;
   }
 
+  removeMerged() {
+    this.mergedTiles = {};
+
+    // Remove from the DOM
+    $(".merged").remove();
+  }
+
+  searchTilesToMerge(key) {
+    const {increment, startAt, direction} = this.defineLoopParams(key);
+// Loop through filledPositions. If a tile exists:
+//  • find the next tile on the same row or col, depending on the direction
+//    • nextPos = direction === "V" ? increment * 10 : increment
+//    • look for filledPositions[nextPos]. If it exists, return (should stop after finding the first tile), check the value and merge if possible.
+//    • should stop incrementing if reached end of board or if found a filledPosition
+
+    let nextTile;
+    keys(this.filledPositions).forEach ( pos => {
+      let intPos = parseInt(pos);
+      let cellContent = this.filledPositions[pos];
+      if (cellContent) nextTile = this.findNextTile(pos, increment, direction);
+      if (nextTile && nextTile.value === cellContent.value) {
+        this.mergeTiles(cellContent, nextTile);
+      }
+    })
+  }
+
+  findNextTile(pos, increment, direction) {
+    const [row, col] = pos.split("").map( coord => parseInt(coord));
+
+    if (direction === "V") {
+      let nextRow = row+increment;
+      while ( nextRow > 0 && nextRow < 5) {
+        let nextPos = this.posToString(nextRow,col);
+        let tile = this.filledPositions[nextPos];
+        if (this.filledPositions[nextPos]) return tile;
+        nextRow+= increment;
+      }
+    } else {
+      let nextCol = col+increment;
+      while ( nextCol > 0 && nextCol < 5) {
+        let nextPos = this.posToString(row, nextCol);
+        let tile = this.filledPositions[nextPos];
+        if (this.filledPositions[nextPos]) return tile;
+        nextCol+= increment;
+      }
+    }
+    return false;
+  }
+
+  mergeTiles(tileA, tileB) {
+
+    // Update tileA
+    const posA = tileA.position;
+    tileA.doubleValue();
+    this.filledPositions[posA] = tileA;
+
+    //Mark tile B to remove
+    const posB = tileB.position;
+    tileB.$html.addClass("merged");
+    this.filledPositions[posB] = false;
+    this.mergedTiles[posA] = tileB;
+
+    this.tileCount--;
+  }
+
+
+
 
   moveTiles(key) {
     //direction can be "UP", "DOWN", "LEFT", "RIGHT"
-    const {increment, startAt, direction} = this.defineSearchParams(key);
+    const {increment, startAt, direction} = this.defineLoopParams(key);
 
     let row, col, pos;
     for (let cell = 0; cell < 16 ; cell++) {
@@ -111,11 +191,9 @@ class Grid {
       if (!this.filledPositions[pos]) this.searchAndMove(row, col, increment, direction);
     }
 
-    this.spawnTile()
-
   }
 
-  defineSearchParams(key) {
+  defineLoopParams(key) {
     let params = {};
     switch (key) {
       case "UP":
@@ -145,7 +223,6 @@ class Grid {
     return params;
   }
 
-
   searchAndMove(row, col, increment, direction) {
     let emptyPos = this.posToString(row,col);
     // debugger
@@ -156,8 +233,11 @@ class Grid {
         let oldPos = this.posToString(oldRow,col);
         if (this.filledPositions[oldPos]) {
           this.filledPositions[emptyPos] = this.filledPositions[oldPos];
-          this.filledPositions[emptyPos].setPosition(emptyPos);
+          // this.filledPositions[emptyPos].setPosition(emptyPos);
           this.filledPositions[oldPos] = false;
+
+          this.mergedTiles[emptyPos] = this.mergedTiles[oldPos];
+          this.mergedTiles[oldPos] = false;
           return;
         }
         oldRow+= increment;
@@ -168,8 +248,12 @@ class Grid {
         let oldPos = this.posToString(row, oldCol);
         if (this.filledPositions[oldPos]) {
           this.filledPositions[emptyPos] = this.filledPositions[oldPos];
-          this.filledPositions[emptyPos].setPosition(emptyPos);
+          // this.filledPositions[emptyPos].setPosition(emptyPos);
           this.filledPositions[oldPos] = false;
+
+          this.mergedTiles[emptyPos] = this.mergedTiles[oldPos];
+          this.mergedTiles[oldPos] = false;
+
           return;
         }
         oldCol+= increment;
@@ -180,6 +264,20 @@ class Grid {
 
   isGridFull() {
     return (this.tileCount === 16);
+  }
+
+  renderDom() {
+    keys(this.filledPositions).forEach( pos => {
+      let tile = this.filledPositions[pos];
+      console.log("Moving ", tile, " to pos ", pos);
+      if (tile) tile.setPosition(pos);
+    });
+
+    keys(this.mergedTiles).forEach( pos => {
+      let tile = this.mergedTiles[pos];
+      console.log("Moving ", tile, " to pos ", pos);
+      if (tile) tile.setPosition(pos);
+    });
   }
 
 

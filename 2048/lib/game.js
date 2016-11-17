@@ -24,8 +24,15 @@ class Game {
 
   playRound() {
     console.log("play");
+    this.removeMerged();
     const keyPressed = this.keyCodes[event.which];
-    if (keyPressed) this.grid.moveTiles(keyPressed);
+    if (keyPressed) {
+      this.grid.removeMerged();
+      this.grid.searchTilesToMerge(keyPressed);
+      this.grid.moveTiles(keyPressed);
+      this.grid.renderDom();
+      this.grid.spawnTile();
+    }
 
     window.setTimeout(() => {
       if (this.grid.isGridFull()) this.gameOver();
@@ -35,6 +42,10 @@ class Game {
   gameOver() {
     console.log("Game over");
     $("body").off("keydown");
+  }
+
+  removeMerged() {
+    $(".merged").remove();
   }
 
 }
