@@ -1,19 +1,37 @@
 @import "./grid.scss";
 @import "./tile.scss";
 
-html, body, h1, h2, h3, div {
-  font: inherit;
-}
-
-body {
-  font-family: 'Audiowide', cursive;
-}
-
 h1 {
   font-size: 60px;
 }
 
+.header {
+  padding: 15px;
+}
+
 .title {
   text-align: center;
-  margin: 15px 0;
+  margin: 0 0 15px;
+}
+
+.new-game {
+  text-align: center;
+}
+
+.new-game-btn {
+  font-family: 'Open-Sans', sans-serif;
+  background-color: #34495e;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin: 10px 0 30px;
+  transition: background-color 100ms;
+  -webkit-transition: background-color 100ms;
+}
+
+.new-game-btn:hover {
+  background-color: #517090;
+  cursor: pointer;
+  transition: background-color 100ms;
+  -webkit-transition: background-color 100ms;
 }

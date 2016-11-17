@@ -7,11 +7,7 @@ function Tile (position, merged=false) {
   this.value = Math.round(Math.random()+1)*2;
   this.position = position;
 
-  if (merged) {
-    this.$html = $(`<div class='tile pos-${position} merged'>${this.value}</div>`);
-  } else {
-    this.$html = $(`<div class='tile pos-${position}'>${this.value}</div>`);
-  }
+  this.$html = $(`<div class='tile val-${this.value} pos-${position}'>${this.value}</div>`);
 }
 
 Tile.prototype.setPosition = function(newPos) {
@@ -20,13 +16,15 @@ Tile.prototype.setPosition = function(newPos) {
 }
 
 Tile.prototype.doubleValue = function() {
-  this.value *= 2;
-  this.$html.text(this.value);
+  const val = this.value * 2;
+  this.setValue(val);
+  // this.$html.text(this.value);
 }
 
 Tile.prototype.setValue = function(val) {
-  this.value = val;
   this.$html.text(val);
+  this.$html.removeClass(`val-${this.value}`).addClass(`val-${val}`);
+  this.value = val;
 }
 
 Tile.prototype.removeSelf = function() {

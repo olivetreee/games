@@ -14,7 +14,7 @@ span, article, footer, time, small {
   vertical-align: inherit;
   box-sizing: inherit;
   background: transparent;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Audiowide', cursive;
   /*Antialiasing:*/
   /*text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -22,7 +22,7 @@ span, article, footer, time, small {
 }
 
 body {
-  background-color: #e5eaec;
+  background-color: #e5f7ff;
 }
 
 h1 {

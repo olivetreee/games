@@ -1,3 +1,13 @@
+@function powerTwo($exp) {
+  $result: 1;
+
+  @for $pow from 1 through $exp {
+    $result: $result * 2;
+  }
+
+  @return $result;
+}
+
 .tile-container {
   position: absolute;
   top: 0;
@@ -7,11 +17,12 @@
   position: absolute;
   width: 100px;
   height: 100px;
-  background: rgb(52, 152, 219);
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 100ms linear;
+  -webkit-transition: transform 100ms linear;
   z-index: 1;
   font-size: 25px;
 }
@@ -20,69 +31,32 @@
   z-index: 0;
 }
 
-.pos-11 {
-  transform: translate(2px,2px);
+@for $row from 0 through 3 {
+  @for $col from 0 through 3 {
+    .pos-#{$row+1}#{$col+1} {
+      transform: translate(#{2+104*$col}px, #{2+104*$row}px);
+    }
+  }
 }
 
-.pos-12 {
-  transform: translate(106px,2px);
+// Blue shades
+@for $val from 0 through 5 {
+  $r: 156-$val*29;
+  $g: 206-$val*12.6;
+  $b: 239-$val*1.8;
+  $classVal: powerTwo($val+1);
+  .val-#{$classVal} {
+    background-color: rgb($r, $g, $b);
+  }
 }
 
-.pos-13 {
-  transform: translate(210px,2px);
-}
-
-.pos-14 {
-  transform: translate(314px,2px);
-}
-
-
-.pos-21 {
-  transform: translate(2px,106px);
-}
-
-.pos-22 {
-  transform: translate(106px,106px);
-}
-
-.pos-23 {
-  transform: translate(210px,106px);
-}
-
-.pos-24 {
-  transform: translate(314px,106px);
-}
-
-
-.pos-31 {
-  transform: translate(2px,210px);
-}
-
-.pos-32 {
-  transform: translate(106px,210px);
-}
-
-.pos-33 {
-  transform: translate(210px,210px);
-}
-
-.pos-34 {
-  transform: translate(314px,210px);
-}
-
-
-.pos-41 {
-  transform: translate(2px,314px);
-}
-
-.pos-42 {
-  transform: translate(106px,314px);
-}
-
-.pos-43 {
-  transform: translate(210px,314px);
-}
-
-.pos-44 {
-  transform: translate(314px,314px);
+// Purple Haze
+@for $val from 0 through 4 {
+  $r: 191-$val*10.75;
+  $g: 167-$val*37.25;
+  $b: 202;
+  $classVal: powerTwo($val+7);
+  .val-#{$classVal} {
+    background-color: rgb($r, $g, $b);
+  }
 }

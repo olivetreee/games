@@ -23,10 +23,11 @@ class Game {
       if (keyPressed) this.playRound(keyPressed)
     });
 
+    $(".new-game-btn").click( () => this.newGame() );
+
   }
 
   playRound(keyPressed) {
-    console.log("play");
     // debugger
     this.removeMerged();
     // debugger
@@ -38,13 +39,26 @@ class Game {
     // debugger
     this.grid.spawnTile();
 
-    window.setTimeout(() => {
+    // window.setTimeout(() => {
       if (this.grid.isGridFull()) this.gameOver();
-    }, 200);
+    // }, 200);
+
+    if (this.grid.isBeatingScore(2048)) this.youWin();
+  }
+
+  newGame() {
+    $(".tile").remove();
+    this.grid.newGrid();
+
   }
 
   gameOver() {
     console.log("Game over");
+    $("body").off("keydown");
+  }
+
+  youWin() {
+    console.log("You Win!");
     $("body").off("keydown");
   }
 

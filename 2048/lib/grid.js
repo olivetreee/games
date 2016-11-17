@@ -1,14 +1,39 @@
 import $ from "jquery";
 import Tile from "./tile";
-import { keys } from "lodash";
+import { keys, findKey } from "lodash";
 
 class Grid {
 
   constructor($gridEl) {
     this.$gridEl = $gridEl;
 
+    this.newGrid();
     this.setupGrid();
 
+    // TESTING
+    // const t1 = this.spawnTile();
+    // const t2 = this.spawnTile();
+    // const t3 = this.spawnTile();
+    //
+    // window.t1 = t1;
+    // window.t2 = t2;
+    // window.t3 = t2;
+    //
+    // this.filledPositions[t1.position] = false;
+    // this.filledPositions[t2.position] = false;
+    // this.filledPositions[t3.position] = false;
+    // t1.setPosition('11');
+    // t1.setValue(2);
+    // t2.setPosition('13');
+    // t2.setValue(2);
+    // t3.setPosition('14');
+    // t3.setValue(4);
+    // this.filledPositions["11"] = t1;
+    // this.filledPositions["13"] = t2;
+    // this.filledPositions["14"] = t3;
+  }
+
+  newGrid() {
     // POJO:
     // this.filledPositions['24'] = TileObj
     this.filledPositions = {};
@@ -18,31 +43,9 @@ class Grid {
     this.tileCount = 0;
 
     // Spawns the first 2 tiles
-    // this.spawnTile();
-    // this.spawnTile();
+    this.spawnTile();
+    this.spawnTile();
 
-
-    // TESTING
-    const t1 = this.spawnTile();
-    const t2 = this.spawnTile();
-    const t3 = this.spawnTile();
-
-    window.t1 = t1;
-    window.t2 = t2;
-    window.t3 = t2;
-
-    this.filledPositions[t1.position] = false;
-    this.filledPositions[t2.position] = false;
-    this.filledPositions[t3.position] = false;
-    t1.setPosition('11');
-    t1.setValue(2);
-    t2.setPosition('13');
-    t2.setValue(2);
-    t3.setPosition('14');
-    t3.setValue(4);
-    this.filledPositions["11"] = t1;
-    this.filledPositions["13"] = t2;
-    this.filledPositions["14"] = t3;
   }
 
   setupGrid() {
@@ -287,16 +290,18 @@ class Grid {
     return (this.tileCount === 16);
   }
 
+  isBeatingScore(score) {
+    return findKey(this.filledPositions, ['value', score])
+  }
+
   renderDom() {
     keys(this.filledPositions).forEach( pos => {
       let tile = this.filledPositions[pos];
-      console.log("Moving ", tile, " to pos ", pos);
       if (tile) tile.setPosition(pos);
     });
 
     keys(this.mergedTiles).forEach( pos => {
       let tile = this.mergedTiles[pos];
-      console.log("Moving ", tile, " to pos ", pos);
       if (tile) tile.setPosition(pos);
     });
   }

@@ -6,11 +6,12 @@
   position: absolute;
   width: 100px;
   height: 100px;
-  background: #3498db;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 100ms linear;
+  -webkit-transition: transform 100ms linear;
   z-index: 1;
   font-size: 25px; }
 
@@ -64,5 +65,38 @@
 
 .pos-44 {
   transform: translate(314px, 314px); }
+
+.val-2 {
+  background-color: #9cceef; }
+
+.val-4 {
+  background-color: #7fc1ed; }
+
+.val-8 {
+  background-color: #62b5eb; }
+
+.val-16 {
+  background-color: #45a8ea; }
+
+.val-32 {
+  background-color: #289ce8; }
+
+.val-64 {
+  background-color: #0b8fe6; }
+
+.val-128 {
+  background-color: #bfa7ca; }
+
+.val-256 {
+  background-color: #b482ca; }
+
+.val-512 {
+  background-color: #aa5dca; }
+
+.val-1024 {
+  background-color: #9f37ca; }
+
+.val-2048 {
+  background-color: #9412ca; }
 
 /*# sourceMappingURL=tile.css.map */
