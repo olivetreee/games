@@ -116,14 +116,35 @@ class Grid {
 //    • should stop incrementing if reached end of board or if found a filledPosition
 
     let nextTile;
-    keys(this.filledPositions).forEach ( pos => {
-      let intPos = parseInt(pos);
+    // keys(this.filledPositions).forEach ( pos => {
+      // debugger
+      // let intPos = parseInt(pos);
+    let row, col, pos;
+    for (let cell = 0; cell < 16 ; cell++) {
+      // The way we run through the cells depends on startAt and increment on the following way:
+      // rowNum = startAt + (increment * (cell%4))
+
+      if (direction === "V") {
+        row = startAt + (increment * (cell%4));
+        col = Math.floor(cell/4) + 1;
+      } else {
+        col = startAt + (increment * (cell%4));
+        row = Math.floor(cell/4) + 1;
+      };
+
+      pos = this.posToString(row,col);
+
+
       let cellContent = this.filledPositions[pos];
-      if (cellContent) nextTile = this.findNextTile(pos, increment, direction);
-      if (nextTile && nextTile.value === cellContent.value) {
-        this.mergeTiles(cellContent, nextTile);
+      if (cellContent) {
+        nextTile = this.findNextTile(pos, increment, direction);
+        // debugger
+        if (nextTile && nextTile.value === cellContent.value) {
+          this.mergeTiles(cellContent, nextTile);
+        }
       }
-    })
+    }
+    // })
   }
 
   findNextTile(pos, increment, direction) {

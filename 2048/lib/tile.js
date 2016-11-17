@@ -25,6 +25,7 @@ Tile.prototype.doubleValue = function() {
 }
 
 Tile.prototype.setValue = function(val) {
+  this.value = val;
   this.$html.text(val);
 }
 

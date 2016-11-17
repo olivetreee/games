@@ -6,12 +6,13 @@
   position: absolute;
   width: 100px;
   height: 100px;
-  background: red;
+  background: #3498db;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 100ms linear;
-  z-index: 1; }
+  z-index: 1;
+  font-size: 25px; }
 
 .merged {
   z-index: 0; }

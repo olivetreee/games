@@ -18,21 +18,25 @@ class Game {
       39: "RIGHT"
     }
 
-    $("body").keydown( event => this.playRound(event));
+    $("body").keydown( event => {
+      const keyPressed = this.keyCodes[event.which];
+      if (keyPressed) this.playRound(keyPressed)
+    });
 
   }
 
-  playRound() {
+  playRound(keyPressed) {
     console.log("play");
+    // debugger
     this.removeMerged();
-    const keyPressed = this.keyCodes[event.which];
-    if (keyPressed) {
-      this.grid.removeMerged();
-      this.grid.searchTilesToMerge(keyPressed);
-      this.grid.moveTiles(keyPressed);
-      this.grid.renderDom();
-      this.grid.spawnTile();
-    }
+    // debugger
+    this.grid.searchTilesToMerge(keyPressed);
+    // debugger
+    this.grid.moveTiles(keyPressed);
+    // debugger
+    this.grid.renderDom();
+    // debugger
+    this.grid.spawnTile();
 
     window.setTimeout(() => {
       if (this.grid.isGridFull()) this.gameOver();

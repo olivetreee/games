@@ -27,12 +27,13 @@
   position: absolute;
   width: 100px;
   height: 100px;
-  background: red;
+  background: #3498db;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 100ms linear;
-  z-index: 1; }
+  z-index: 1;
+  font-size: 25px; }
 
 .merged {
   z-index: 0; }
@@ -84,5 +85,18 @@
 
 .pos-44 {
   transform: translate(314px, 314px); }
+
+html, body, h1, h2, h3, div {
+  font: inherit; }
+
+body {
+  font-family: 'Audiowide', cursive; }
+
+h1 {
+  font-size: 60px; }
+
+.title {
+  text-align: center;
+  margin: 15px 0; }
 
 /*# sourceMappingURL=index.css.map */

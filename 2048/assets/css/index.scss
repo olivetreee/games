@@ -1,2 +1,19 @@
 @import "./grid.scss";
 @import "./tile.scss";
+
+html, body, h1, h2, h3, div {
+  font: inherit;
+}
+
+body {
+  font-family: 'Audiowide', cursive;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+.title {
+  text-align: center;
+  margin: 15px 0;
+}
