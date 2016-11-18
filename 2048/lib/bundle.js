@@ -10380,6 +10380,8 @@
 	      this.gamePoints = 0;
 	      this.updateScore();
 	
+	      (0, _jquery2.default)(".game-over").remove();
+	
 	      (0, _jquery2.default)("body").keydown(function (event) {
 	        var keyPressed = _this2.keyCodes[event.which];
 	        if (keyPressed) _this2.playRound(keyPressed);
@@ -10410,14 +10412,18 @@
 	  }, {
 	    key: "gameOver",
 	    value: function gameOver() {
-	      console.log("Game over");
+	      var $gameOver = (0, _jquery2.default)("<section class=\"game-over\">\n            <h2>Game Over</h2>\n            <h3>Click the logo to start a new game</h3>\n          </section>");
+	
+	      (0, _jquery2.default)("#game").append($gameOver);
 	      (0, _jquery2.default)("body").off("keydown");
 	    }
 	  }, {
 	    key: "youWin",
 	    value: function youWin() {
-	      console.log("You Win!");
 	      (0, _jquery2.default)("body").off("keydown");
+	      var $gameOver = (0, _jquery2.default)("<section class=\"game-over\">\n            <h2>You Win!</h2>\n            <h3>Click the logo to start a new game</h3>\n          </section>");
+	
+	      (0, _jquery2.default)("#game").append($gameOver);
 	    }
 	  }, {
 	    key: "removeMerged",

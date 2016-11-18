@@ -98,3 +98,31 @@ h1 {
   align-items: center;
   font-family: 'Audiowide', cursive;
 }
+
+.game-description {
+  text-align: center;
+}
+
+.game-over {
+  position: absolute;
+  top: 195px;
+  right: 615px;
+  width: 500px;
+  height: 500px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.game-over h2 {
+  font-size: 50px;
+  margin-bottom: 30px;
+  font-family: 'Audiowide', cursive;
+}
+
+.hidden {
+  display: none;
+}

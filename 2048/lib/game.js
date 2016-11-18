@@ -59,6 +59,8 @@ class Game {
     this.gamePoints = 0;
     this.updateScore();
 
+    $(".game-over").remove();
+
     $("body").keydown( event => {
       const keyPressed = this.keyCodes[event.which];
       if (keyPressed) this.playRound(keyPressed)
@@ -87,13 +89,23 @@ class Game {
   }
 
   gameOver() {
-    console.log("Game over");
+    const $gameOver = $(`<section class="game-over">
+            <h2>Game Over</h2>
+            <h3>Click the logo to start a new game</h3>
+          </section>`)
+
+    $("#game").append($gameOver);
     $("body").off("keydown");
   }
 
   youWin() {
-    console.log("You Win!");
     $("body").off("keydown");
+    const $gameOver = $(`<section class="game-over">
+            <h2>You Win!</h2>
+            <h3>Click the logo to start a new game</h3>
+          </section>`)
+
+    $("#game").append($gameOver);
   }
 
   removeMerged() {
