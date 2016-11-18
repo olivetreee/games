@@ -13,6 +13,17 @@
   top: 0;
 }
 
+.tile-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  transition: transform 100ms linear;
+  -webkit-transition: transform 100ms linear;
+}
+
 .tile {
   position: absolute;
   width: 100px;
@@ -21,21 +32,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 100ms linear;
-  -webkit-transition: transform 100ms linear;
-  z-index: 1;
+  // z-index: 1;
   font-size: 25px;
   border-radius: 50px;
   font-family: 'Audiowide', cursive;
 }
 
-.merged {
+.tile-wrapper.merged {
   z-index: 0;
 }
 
 @for $row from 0 through 3 {
   @for $col from 0 through 3 {
     .pos-#{$row+1}#{$col+1} {
+      z-index: 1;
       transform: translate(#{10+120*$col}px, #{20+120*$row}px);
     }
   }

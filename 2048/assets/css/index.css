@@ -21,6 +21,16 @@
   position: absolute;
   top: 0; }
 
+.tile-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  transition: transform 100ms linear;
+  -webkit-transition: transform 100ms linear; }
+
 .tile {
   position: absolute;
   width: 100px;
@@ -29,62 +39,75 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 100ms linear;
-  -webkit-transition: transform 100ms linear;
-  z-index: 1;
   font-size: 25px;
   border-radius: 50px;
   font-family: 'Audiowide', cursive; }
 
-.merged {
+.tile-wrapper.merged {
   z-index: 0; }
 
 .pos-11 {
+  z-index: 1;
   transform: translate(10px, 20px); }
 
 .pos-12 {
+  z-index: 1;
   transform: translate(130px, 20px); }
 
 .pos-13 {
+  z-index: 1;
   transform: translate(250px, 20px); }
 
 .pos-14 {
+  z-index: 1;
   transform: translate(370px, 20px); }
 
 .pos-21 {
+  z-index: 1;
   transform: translate(10px, 140px); }
 
 .pos-22 {
+  z-index: 1;
   transform: translate(130px, 140px); }
 
 .pos-23 {
+  z-index: 1;
   transform: translate(250px, 140px); }
 
 .pos-24 {
+  z-index: 1;
   transform: translate(370px, 140px); }
 
 .pos-31 {
+  z-index: 1;
   transform: translate(10px, 260px); }
 
 .pos-32 {
+  z-index: 1;
   transform: translate(130px, 260px); }
 
 .pos-33 {
+  z-index: 1;
   transform: translate(250px, 260px); }
 
 .pos-34 {
+  z-index: 1;
   transform: translate(370px, 260px); }
 
 .pos-41 {
+  z-index: 1;
   transform: translate(10px, 380px); }
 
 .pos-42 {
+  z-index: 1;
   transform: translate(130px, 380px); }
 
 .pos-43 {
+  z-index: 1;
   transform: translate(250px, 380px); }
 
 .pos-44 {
+  z-index: 1;
   transform: translate(370px, 380px); }
 
 .val-2 {
@@ -156,7 +179,8 @@ h1 {
   color: #ecf0f1;
   padding: 5px 0px;
   width: 150px;
-  border-radius: 25px; }
+  border-radius: 25px;
+  font-family: 'Audiowide', cursive; }
 
 .game-score:hover {
   cursor: default; }

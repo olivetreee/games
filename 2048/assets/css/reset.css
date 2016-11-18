@@ -14,7 +14,6 @@ span, article, footer, time, small {
   vertical-align: inherit;
   box-sizing: inherit;
   background: transparent;
-  font-family: 'Open-Sans', sans-serif;
   /*Antialiasing:*/
   /*text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -23,6 +22,7 @@ span, article, footer, time, small {
 
 body {
   background-color: #e5f7ff;
+  font-family: 'Open-Sans', sans-serif;
 }
 
 h1 {
