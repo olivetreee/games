@@ -31,6 +31,29 @@ Tile.prototype.removeSelf = function() {
   const htmlClass = `.pos-${this.position}`;
   debugger
   window.setTimeout(() => $(htmlClass).remove(), 200);
+}
+
+Tile.prototype.spawn = function() {
+  // debugger
+  const tileClass = `pos-${this.position}`;
+  console.log(document.getElementsByClassName(tileClass));
+  const tileEl = document.getElementsByClassName(tileClass)[0];
+
+  tileEl.animate({
+    opacity: [0,1],
+  }, {
+    // Apply effect during delay.
+    fill: 'backwards',
+
+    // Iterations last for 2000ms.
+    duration: 300,
+
+    // Play every second iteration backwards.
+    direction: 'normal',
+
+    // The timing function to use with each iteration.
+    easing: 'linear'
+  });
 
 }
 

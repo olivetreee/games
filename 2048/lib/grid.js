@@ -7,8 +7,8 @@ class Grid {
   constructor($gridEl) {
     this.$gridEl = $gridEl;
 
-    this.newGrid();
     this.setupGrid();
+    this.newGrid();
 
     // TESTING
     // const t1 = this.spawnTile();
@@ -77,9 +77,11 @@ class Grid {
     this.tileCount++;
 
     // Wait for the move animation to finish to add the tile to the visual grid. It has to be after this.tileCount or the player might make a new move during the timeout period, resulting in a crash.
-    window.setTimeout(() => {
+    // window.setTimeout(() => {
       $(".tile-container").append(newTile.$html);
-    }, 200);
+    // }, 200);
+
+    newTile.spawn();
 
     return newTile;
   }
@@ -189,9 +191,6 @@ class Grid {
 
     this.tileCount--;
   }
-
-
-
 
   moveTiles(key) {
     //direction can be "UP", "DOWN", "LEFT", "RIGHT"

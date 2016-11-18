@@ -21,11 +21,12 @@ class Game {
     this.gamePoints = 0;
 
     $("body").keydown( event => {
+      event.preventDefault();
       const keyPressed = this.keyCodes[event.which];
       if (keyPressed) this.playRound(keyPressed)
     });
 
-    $(".new-game-btn").click( () => this.newGame() );
+    $(".title h1").click( () => this.newGame() );
 
   }
 
@@ -66,8 +67,9 @@ class Game {
   }
 
   flashRoundPoints() {
-    $("#round_points").text(this.grid.roundPoints);
-    round_points.animate({
+    const bubble = document.getElementsByClassName("points-bubble")[0];
+    $(bubble).text(this.grid.roundPoints);
+    bubble.animate({
       opacity: [0,1,0],
       transform: ["none", "translateY(-50px)"]
     }, {

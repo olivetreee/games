@@ -1,8 +1,11 @@
 @import "./grid.scss";
 @import "./tile.scss";
 
-h1 {
-  font-size: 60px;
+
+.wrapper {
+  width: 750px;
+  margin: auto;
+  padding: 0px 0 30px;
 }
 
 .header {
@@ -14,8 +17,39 @@ h1 {
   margin: 0 0 15px;
 }
 
+h1 {
+  font-size: 60px;
+}
+
 .title h1 {
   font-family: 'Audiowide', cursive;
+  width: 200px;
+  margin: auto;
+}
+
+.title h1:hover {
+  cursor: pointer;
+}
+
+.sub-title {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+}
+
+.game-score {
+  font-size: 30px;
+  border: solid 2px #2c3e50;
+  background-color: #34495e;
+  color: #ecf0f1;
+  padding: 5px 0px;
+  width: 150px;
+  border-radius: 25px;
+}
+
+.game-score:hover {
+  cursor: default;
 }
 
 .new-game {
@@ -27,7 +61,6 @@ h1 {
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
-  margin: 10px 0 30px;
   transition: background-color 100ms;
   -webkit-transition: background-color 100ms;
 }
@@ -43,12 +76,18 @@ h1 {
   font-family: 'Audiowide', cursive;
 }
 
-#round_points {
+.round-points {
+  width: 100%;
+  position: absolute;
+  top: 50px;
+}
+
+.points-bubble {
   background-color: #3498db;
   color: white;
-  font-size: 30px;
-  width: 100px;
-  height: 100px;
+  font-size: 25px;
+  width: 75px;
+  height: 75px;
   border-radius: 50px;
   margin: auto;
   opacity: 0;
