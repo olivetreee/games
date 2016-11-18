@@ -13,90 +13,92 @@
   transition: transform 100ms linear;
   -webkit-transition: transform 100ms linear;
   z-index: 1;
-  font-size: 25px; }
+  font-size: 25px;
+  border-radius: 50px;
+  font-family: 'Audiowide', cursive; }
 
 .merged {
   z-index: 0; }
 
 .pos-11 {
-  transform: translate(2px, 2px); }
+  transform: translate(10px, 20px); }
 
 .pos-12 {
-  transform: translate(106px, 2px); }
+  transform: translate(130px, 20px); }
 
 .pos-13 {
-  transform: translate(210px, 2px); }
+  transform: translate(250px, 20px); }
 
 .pos-14 {
-  transform: translate(314px, 2px); }
+  transform: translate(370px, 20px); }
 
 .pos-21 {
-  transform: translate(2px, 106px); }
+  transform: translate(10px, 140px); }
 
 .pos-22 {
-  transform: translate(106px, 106px); }
+  transform: translate(130px, 140px); }
 
 .pos-23 {
-  transform: translate(210px, 106px); }
+  transform: translate(250px, 140px); }
 
 .pos-24 {
-  transform: translate(314px, 106px); }
+  transform: translate(370px, 140px); }
 
 .pos-31 {
-  transform: translate(2px, 210px); }
+  transform: translate(10px, 260px); }
 
 .pos-32 {
-  transform: translate(106px, 210px); }
+  transform: translate(130px, 260px); }
 
 .pos-33 {
-  transform: translate(210px, 210px); }
+  transform: translate(250px, 260px); }
 
 .pos-34 {
-  transform: translate(314px, 210px); }
+  transform: translate(370px, 260px); }
 
 .pos-41 {
-  transform: translate(2px, 314px); }
+  transform: translate(10px, 380px); }
 
 .pos-42 {
-  transform: translate(106px, 314px); }
+  transform: translate(130px, 380px); }
 
 .pos-43 {
-  transform: translate(210px, 314px); }
+  transform: translate(250px, 380px); }
 
 .pos-44 {
-  transform: translate(314px, 314px); }
+  transform: translate(370px, 380px); }
 
 .val-2 {
-  background-color: #9cceef; }
+  background-color: #3498db; }
 
 .val-4 {
-  background-color: #7fc1ed; }
+  background-color: #2980b9; }
 
 .val-8 {
-  background-color: #62b5eb; }
+  background-color: #1abc9c; }
 
 .val-16 {
-  background-color: #45a8ea; }
+  background-color: #16a085; }
 
 .val-32 {
-  background-color: #289ce8; }
+  background-color: #2ecc71; }
 
 .val-64 {
-  background-color: #0b8fe6; }
+  background-color: #9b59b6; }
 
 .val-128 {
-  background-color: #bfa7ca; }
+  background-color: #f1c40f; }
 
 .val-256 {
-  background-color: #b482ca; }
+  background-color: #f39c12; }
 
 .val-512 {
-  background-color: #aa5dca; }
+  background-color: #d35400; }
 
 .val-1024 {
-  background-color: #9f37ca; }
+  background-color: #e74c3c; }
 
 .val-2048 {
-  background-color: #9412ca; }
+  background-color: #34495e; }
 
 /*# sourceMappingURL=tile.css.map */

@@ -38,6 +38,7 @@ class Grid {
     // this.filledPositions['24'] = TileObj
     this.filledPositions = {};
     this.mergedTiles = {};
+    this.roundPoints = 0;
 
     // To check if board is full
     this.tileCount = 0;
@@ -177,7 +178,7 @@ class Grid {
 
     // Update tileA
     const posA = tileA.position;
-    tileA.doubleValue();
+    this.roundPoints += tileA.doubleValue();
     this.filledPositions[posA] = tileA;
 
     //Mark tile B to remove

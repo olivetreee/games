@@ -18,6 +18,8 @@ class Game {
       39: "RIGHT"
     }
 
+    this.gamePoints = 0;
+
     $("body").keydown( event => {
       const keyPressed = this.keyCodes[event.which];
       if (keyPressed) this.playRound(keyPressed)
@@ -28,16 +30,19 @@ class Game {
   }
 
   playRound(keyPressed) {
-    // debugger
+
+
+    this.grid.roundPoints= 0;
     this.removeMerged();
-    // debugger
     this.grid.searchTilesToMerge(keyPressed);
-    // debugger
     this.grid.moveTiles(keyPressed);
-    // debugger
     this.grid.renderDom();
-    // debugger
     this.grid.spawnTile();
+    this.updateScore();
+
+    if (this.grid.roundPoints) {
+      this.flashRoundPoints();
+    }
 
     // window.setTimeout(() => {
       if (this.grid.isGridFull()) this.gameOver();
@@ -50,6 +55,39 @@ class Game {
     $(".tile").remove();
     this.grid.newGrid();
 
+    this.gamePoints = 0;
+    this.updateScore();
+
+    $("body").keydown( event => {
+      const keyPressed = this.keyCodes[event.which];
+      if (keyPressed) this.playRound(keyPressed)
+    });
+
+  }
+
+  flashRoundPoints() {
+    $("#round_points").text(this.grid.roundPoints);
+    round_points.animate({
+      opacity: [0,1,0],
+      transform: ["none", "translateY(-50px)"]
+    }, {
+      // Apply effect during delay.
+      fill: 'backwards',
+
+      // Iterations last for 2000ms.
+      duration: 500,
+
+      // Play every second iteration backwards.
+      direction: 'normal',
+
+      // The timing function to use with each iteration.
+      easing: 'linear'
+    });
+  }
+
+  updateScore() {
+    this.gamePoints += this.grid.roundPoints;
+    $(".game-score span").text(this.gamePoints);
   }
 
   gameOver() {

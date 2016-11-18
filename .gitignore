@@ -10,3 +10,5 @@
 * Ignore Apple sys file
 *.DS_Store
 
+Ignore Sass cache
+*2048/.sass-cache/

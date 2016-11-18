@@ -25,6 +25,8 @@
   -webkit-transition: transform 100ms linear;
   z-index: 1;
   font-size: 25px;
+  border-radius: 50px;
+  font-family: 'Audiowide', cursive;
 }
 
 .merged {
@@ -34,29 +36,75 @@
 @for $row from 0 through 3 {
   @for $col from 0 through 3 {
     .pos-#{$row+1}#{$col+1} {
-      transform: translate(#{2+104*$col}px, #{2+104*$row}px);
+      transform: translate(#{10+120*$col}px, #{20+120*$row}px);
     }
   }
 }
 
-// Blue shades
-@for $val from 0 through 5 {
-  $r: 156-$val*29;
-  $g: 206-$val*12.6;
-  $b: 239-$val*1.8;
-  $classVal: powerTwo($val+1);
-  .val-#{$classVal} {
-    background-color: rgb($r, $g, $b);
-  }
+.val-2 {
+  background-color: #3498db;
 }
 
-// Purple Haze
-@for $val from 0 through 4 {
-  $r: 191-$val*10.75;
-  $g: 167-$val*37.25;
-  $b: 202;
-  $classVal: powerTwo($val+7);
-  .val-#{$classVal} {
-    background-color: rgb($r, $g, $b);
-  }
+.val-4 {
+  background-color: #2980b9;
 }
+
+.val-8 {
+  background-color: #1abc9c;
+}
+
+.val-16 {
+  background-color: #16a085;
+}
+
+.val-32 {
+  background-color: #2ecc71;
+}
+
+.val-64 {
+  background-color: #9b59b6;
+}
+
+.val-128 {
+  background-color: #f1c40f;
+}
+
+.val-256 {
+  background-color: #f39c12;
+}
+
+.val-512 {
+  background-color: #d35400;
+}
+
+.val-1024 {
+  background-color: #e74c3c;
+}
+
+.val-2048 {
+  background-color: #34495e;
+}
+
+//
+//
+// // Blue shades
+// @for $val from 0 through 5 {
+//   $r: 156-$val*29;
+//   $g: 206-$val*12.6;
+//   $b: 239-$val*1.8;
+//   $classVal: powerTwo($val+1);
+//   .val-#{$classVal} {
+//     background-color: rgb($r, $g, $b);
+//   }
+// }
+//
+// // Purple Haze
+// @for $val from 0 through 4 {
+//   $r: 191-$val*10.75;
+//   $g: 167-$val*37.25;
+//   $b: 202;
+//   $classVal: powerTwo($val+7);
+//   .val-#{$classVal} {
+//     background-color: rgb($r, $g, $b);
+//   }
+// }

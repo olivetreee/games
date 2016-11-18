@@ -1,25 +1,20 @@
 .grid-container {
-  border: solid 2px #7f8c8d;
-  width: 416px;
+  border: solid 2px #e2f1f3;
+  width: 480px;
   margin: auto;
   border-radius: 5px;
   position: relative;
   z-index: -2;
-}
+  padding: 10px;}
 
 .grid-row {
-  width: 416px;
-  border-top: solid 2px #7f8c8d;
-  // box-sizing: border-box;
-  border-bottom: solid 2px #7f8c8d;
+  width: 480px;
 }
 
 .grid-cell {
   height: 100px;
   width: 100px;
   float: left;
-  background-color: #bdc3c7;
-  border-left: solid 2px #7f8c8d;
-  border-right: solid 2px #7f8c8d;
-  // box-sizing: border-box;
-}
+  background-color: #e2eef7;
+  border-radius: 50px;
+  margin: 10px;}

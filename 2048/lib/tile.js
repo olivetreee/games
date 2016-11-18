@@ -18,7 +18,7 @@ Tile.prototype.setPosition = function(newPos) {
 Tile.prototype.doubleValue = function() {
   const val = this.value * 2;
   this.setValue(val);
-  // this.$html.text(this.value);
+  return val;
 }
 
 Tile.prototype.setValue = function(val) {
