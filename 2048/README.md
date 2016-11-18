@@ -28,6 +28,7 @@ Although the basic game doesn't have too many features, I decided to cook up som
 | Difficulties | In Progress | |
 | Save game state so player can return after leaving | | |
 | Change color scheme | | |
+| Easter Eggs | DEPLOYED 30 | | |
 
 
 ## Under the hood
