@@ -2,7 +2,7 @@
 .byebug_history
 
 * Ignore bundled files
-*bundle.js*
+* *bundle.js*
 
 * Ignore webpack installed pkgs
 *node_modules/
