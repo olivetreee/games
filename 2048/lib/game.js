@@ -73,14 +73,8 @@ class Game {
       opacity: [0,1,0],
       transform: ["none", "translateY(-50px)"]
     }, {
-      // Apply effect during delay.
-      fill: 'backwards',
-
-      // Iterations last for 2000ms.
+      // Iterations last for 500ms.
       duration: 500,
-
-      // Play every second iteration backwards.
-      direction: 'normal',
 
       // The timing function to use with each iteration.
       easing: 'linear'

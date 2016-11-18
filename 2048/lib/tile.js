@@ -46,12 +46,11 @@ Tile.prototype.spawn = function() {
   // debugger
   const tileClass = `.pos-${this.position}`;
   const tileEl = document.querySelector(`${tileClass} .tile`);
-  console.log(tileEl);
 
   tileEl.animate({
     transform: ['scale(0,0)', 'scale(1,1)'],
   }, {
-    // Apply effect during delay.
+    // Apply effect during delay. Avoids flashing effect.
     fill: 'backwards',
 
     // Wait some time while move happens
@@ -59,9 +58,6 @@ Tile.prototype.spawn = function() {
 
     // Iterations last for 2000ms.
     duration: 200,
-
-    // Play every second iteration backwards.
-    direction: 'normal',
 
     // The timing function to use with each iteration.
     easing: 'linear'
