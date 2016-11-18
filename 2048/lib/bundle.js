@@ -10334,13 +10334,14 @@
 	      39: "RIGHT"
 	    };
 	
+	    this.konamiCode = {
+	      keys: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13],
+	      nextKeyIndex: 0
+	    };
+	
 	    this.gamePoints = 0;
 	
-	    (0, _jquery2.default)("body").keydown(function (event) {
-	      event.preventDefault();
-	      var keyPressed = _this.keyCodes[event.which];
-	      if (keyPressed) _this.playRound(keyPressed);
-	    });
+	    this.setKeyListener();
 	
 	    (0, _jquery2.default)(".title h1").click(function () {
 	      return _this.newGame();
@@ -10348,6 +10349,23 @@
 	  }
 	
 	  _createClass(Game, [{
+	    key: "setKeyListener",
+	    value: function setKeyListener() {
+	      var _this2 = this;
+	
+	      (0, _jquery2.default)("body").keydown(function (event) {
+	        event.preventDefault();
+	        var cheat = _this2.checkKonamiCode(event.which);
+	
+	        if (cheat) {
+	          _this2.newKonamiGame();
+	        } else {
+	          var keyPressed = _this2.keyCodes[event.which];
+	          if (keyPressed) _this2.playRound(keyPressed);
+	        }
+	      });
+	    }
+	  }, {
 	    key: "playRound",
 	    value: function playRound(keyPressed) {
 	
@@ -10372,20 +10390,17 @@
 	  }, {
 	    key: "newGame",
 	    value: function newGame() {
-	      var _this2 = this;
-	
 	      (0, _jquery2.default)(".tile").remove();
 	      this.grid.newGrid();
 	
 	      this.gamePoints = 0;
 	      this.updateScore();
 	
+	      this.konamiCode.nextKeyIndex = 0;
+	
 	      (0, _jquery2.default)(".game-over").remove();
 	
-	      (0, _jquery2.default)("body").keydown(function (event) {
-	        var keyPressed = _this2.keyCodes[event.which];
-	        if (keyPressed) _this2.playRound(keyPressed);
-	      });
+	      this.setKeyListener();
 	    }
 	  }, {
 	    key: "flashRoundPoints",
@@ -10429,6 +10444,28 @@
 	    key: "removeMerged",
 	    value: function removeMerged() {
 	      (0, _jquery2.default)(".merged").remove();
+	    }
+	  }, {
+	    key: "checkKonamiCode",
+	    value: function checkKonamiCode(key) {
+	      var correctKey = this.konamiCode.keys[this.konamiCode.nextKeyIndex];
+	      if (correctKey === key) {
+	        this.konamiCode.nextKeyIndex += 1;
+	      } else {
+	        this.konamiCode.nextKeyIndex = 0;
+	      }
+	
+	      if (this.konamiCode.nextKeyIndex === 11) {
+	        this.konamiCode.nextKeyIndex = 0;
+	        return true;
+	      }
+	      return false;
+	    }
+	  }, {
+	    key: "newKonamiGame",
+	    value: function newKonamiGame() {
+	      (0, _jquery2.default)(".tile").remove();
+	      this.grid.newKonamiGrid();
 	    }
 	  }]);
 	
@@ -10512,6 +10549,26 @@
 	      // Spawns the first 2 tiles
 	      this.spawnTile();
 	      this.spawnTile();
+	    }
+	  }, {
+	    key: "newKonamiGrid",
+	    value: function newKonamiGrid() {
+	      this.filledPositions = {};
+	      this.mergedTiles = {};
+	
+	      this.tileCount = 0;
+	
+	      var t1 = this.spawnTile();
+	      var t2 = this.spawnTile();
+	
+	      this.filledPositions[t1.position] = false;
+	      this.filledPositions[t2.position] = false;
+	      t1.setPosition('11');
+	      t1.setValue(1024);
+	      t2.setPosition('14');
+	      t2.setValue(1024);
+	      this.filledPositions["11"] = t1;
+	      this.filledPositions["14"] = t2;
 	    }
 	  }, {
 	    key: "setupGrid",

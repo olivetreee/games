@@ -49,6 +49,25 @@ class Grid {
 
   }
 
+  newKonamiGrid() {
+    this.filledPositions = {};
+    this.mergedTiles = {};
+    
+    this.tileCount = 0;
+
+    const t1 = this.spawnTile();
+    const t2 = this.spawnTile();
+
+    this.filledPositions[t1.position] = false;
+    this.filledPositions[t2.position] = false;
+    t1.setPosition('11');
+    t1.setValue(1024);
+    t2.setPosition('14');
+    t2.setValue(1024);
+    this.filledPositions["11"] = t1;
+    this.filledPositions["14"] = t2;
+  }
+
   setupGrid() {
     const $gridContainer = $("<div class='grid-container'>");
 

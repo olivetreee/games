@@ -18,20 +18,35 @@ class Game {
       39: "RIGHT"
     }
 
+    this.konamiCode = {
+      keys: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13],
+      nextKeyIndex: 0
+    }
+
     this.gamePoints = 0;
 
-    $("body").keydown( event => {
-      event.preventDefault();
-      const keyPressed = this.keyCodes[event.which];
-      if (keyPressed) this.playRound(keyPressed)
-    });
+    this.setKeyListener();
 
     $(".title h1").click( () => this.newGame() );
 
   }
 
-  playRound(keyPressed) {
+  setKeyListener() {
+    $("body").keydown( event => {
+      event.preventDefault();
+      const cheat = this.checkKonamiCode(event.which);
 
+      if (cheat) {
+        this.newKonamiGame();
+      } else {
+        const keyPressed = this.keyCodes[event.which];
+        if (keyPressed) this.playRound(keyPressed)
+      }
+    });
+
+  }
+
+  playRound(keyPressed) {
 
     this.grid.roundPoints= 0;
     this.removeMerged();
@@ -59,12 +74,11 @@ class Game {
     this.gamePoints = 0;
     this.updateScore();
 
+    this.konamiCode.nextKeyIndex = 0;
+
     $(".game-over").remove();
 
-    $("body").keydown( event => {
-      const keyPressed = this.keyCodes[event.which];
-      if (keyPressed) this.playRound(keyPressed)
-    });
+    this.setKeyListener();
 
   }
 
@@ -110,6 +124,26 @@ class Game {
 
   removeMerged() {
     $(".merged").remove();
+  }
+
+  checkKonamiCode(key) {
+    const correctKey = this.konamiCode.keys[this.konamiCode.nextKeyIndex];
+    if (correctKey === key) {
+      this.konamiCode.nextKeyIndex+=1;
+    } else {
+      this.konamiCode.nextKeyIndex = 0;
+    }
+
+    if (this.konamiCode.nextKeyIndex === 11) {
+      this.konamiCode.nextKeyIndex = 0;
+      return true;
+    }
+    return false;
+  }
+
+  newKonamiGame() {
+    $(".tile").remove();
+    this.grid.newKonamiGrid();
   }
 
 }
