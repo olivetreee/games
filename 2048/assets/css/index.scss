@@ -74,8 +74,9 @@ h1 {
   -webkit-transition: background-color 100ms;
 }
 
-.game {
+#game {
   font-family: 'Audiowide', cursive;
+  position: relative;
 }
 
 .round-points {
@@ -105,8 +106,8 @@ h1 {
 
 .game-over {
   position: absolute;
-  top: 195px;
-  right: 615px;
+  top: 0px;
+  right: 125px;
   width: 500px;
   height: 500px;
   background: rgba(255, 255, 255, 0.9);
