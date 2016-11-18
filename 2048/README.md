@@ -11,7 +11,7 @@ But careful: Pressing an arrow key moves all of the tiles at the same time, so y
 
 If you've never played it, I suggest you go have some fun with it:
 
-[2048](github.clapinton.io/2048)
+[2048](https://clapinton.github.io/games/2048/)
 
 ### Credit
 This project was based on [Gabriele Cirulli's](https://github.com/gabrielecirulli/2048) version, which was then based on an app called 1024.
@@ -36,7 +36,7 @@ The game was entirely built on vanilla JavaScript and jQuery for the logic, and 
 The main algorithm flows as follows:
 1. (DOM) Remove cells that were merged on the previous round;
 2. (data) Search and Merge Tiles;
-3. (data) Move tiles to their positions;
+3. (data) Search and Move Tiles;
 4. (DOM) Mirror the tiles data state to the DOM;
 5. (data/DOM) Spawn a new tile at a random position;
 6. (data/DOM) Update game score;
@@ -118,3 +118,95 @@ for (let cell = 0; cell < 16 ; cell++) {
   if (!this.filledPositions[pos]) this.searchAndMove(row, col, increment, direction);
 
 ```
+
+### Merging
+For merging, the logic is very similar: we start by looking for the first non-empty cell, which would be **1-4** above. Having that, we search for the next non-empty cell, which is again **1-1**. We then compare the values and, if they're the same, we merge them.
+
+Actually merging is a two-step process:
+* update one tile, doubling its value;
+* move the other tile to the `mergedTiles` object, to be removed on the next round.
+
+
+### Updating the DOM
+After we're done with the merge and move logic, we have to update the DOM. Before we get to that, it's worth understanding how the tiles are positioned around.
+
+#### Styling and Moving Tiles
+All tiles on the DOM have three classes: `pos-13`, `val-4` and `tile`. The first one sets the actual position of the tile, while the second is used for coloring it correctly:
+```css
+.pos-13 {
+  z-index: 1;
+  transform: translate(250px, 20px); }
+
+.val-4 {
+  background-color: #2980b9; }
+```
+
+Notice the `z-index` property. When we merge two tiles, one ends up behind the other. Therefore, the one with the merged class gets assigned a lower `z-index`, to make sure it stays behind the doubled tile.
+
+To move a tile, we simply assign another class, like `pos-14`. The third class, `tile` is responsible for the general styling and for defining `transition` for the `transform` property, which takes care of the animation for movement.
+
+
+### Back to the DOM
+Updating the DOM is done by iterating through the `filledPositions` object and, for every filled cell:
+* remove the current `pos` class;
+* interpolate the key (position) into a class name and assign that using jQuery:
+```javascript
+this.$html.removeClass(`pos-${this.position}`).addClass(`pos-${newPos}`);
+this.position = newPos;
+```
+
+### DRYing up the CSS
+As you can imagine, we need 16 classes for positions. We could type them all out, but maintaining them would be a pain. Imagine I wanted to increase the size of the cells and/or the whole grid. I'd then have to change each one manually. We're in 2016. There are smarter ways to do that. In this case, it's called SCSS.
+
+`pos-11` starts at (10px, 20px). After that, we add the margins and width/height to calculate the adjacent tile. In our case, that increment is 120px, which results in the following code:
+```scss
+@for $row from 0 through 3 {
+  @for $col from 0 through 3 {
+    .pos-#{$row+1}#{$col+1} {
+      z-index: 1;
+      transform: translate(#{10+120*$col}px, #{20+120*$row}px);
+    }
+  }
+}
+```
+
+### Animations
+Achieving the basic movement animation is easily done through CSS' own `transition` property. But the following are not that straightforward:
+
+![Score Bubble](./assets/images/bubble-animation.gif)
+
+![Spawning Tile](./assets/images/spawn-tile.gif)
+
+These animations were achieved through the Web Animations API, allowing for a straightforward code:
+```javascript
+// Score bubble
+bubble.animate({
+  opacity: [0,1,0],
+  transform: ["none", "translateY(-50px)"]
+}, {
+  // Iterations last for 500ms.
+  duration: 500,
+
+  // The timing function to use with each iteration.
+  easing: 'linear'
+});
+
+// Tile spawning
+tileEl.animate({
+  transform: ['scale(0,0)', 'scale(1,1)'],
+}, {
+  // Apply effect during delay. Avoids flashing effect.
+  fill: 'backwards',
+
+  // Wait some time while move happens
+  delay: 100,
+
+  // Iterations last for 2000ms.
+  duration: 200,
+
+  // The timing function to use with each iteration.
+  easing: 'linear'
+});
+```
+
+## A note on CPU and GPU usage
