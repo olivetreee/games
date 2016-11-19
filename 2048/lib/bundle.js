@@ -28075,10 +28075,28 @@
 	      var $tileHtml = (0, _jquery2.default)("<div class='tile " + valClass + "'>").css("top", tileTop).css("left", tileLeft).css("filter", "blur(" + randomBlur + ")");
 	      $tileHtml.text(val);
 	      (0, _jquery2.default)("#background").append($tileHtml);
+	      this.animateSpawn($tileHtml[0]);
 	    }
 	  }, {
-	    key: "addTileToDom",
-	    value: function addTileToDom(tile) {}
+	    key: "animateSpawn",
+	    value: function animateSpawn(tile) {
+	      console.log(tile);
+	      tile.animate({
+	        transform: ['scale(0,0)', 'scale(1,1)']
+	      }, {
+	        // Apply effect during delay. Avoids flashing effect.
+	        fill: 'backwards',
+	
+	        // Wait some time while move happens
+	        delay: 100,
+	
+	        // Iterations last for 2000ms.
+	        duration: 200,
+	
+	        // The timing function to use with each iteration.
+	        easing: 'linear'
+	      });
+	    }
 	  }]);
 	
 	  return Background;

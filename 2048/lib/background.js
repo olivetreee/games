@@ -16,9 +16,27 @@ class Background {
     $(`<div class='tile ${valClass}'>`).css("top", tileTop).css("left", tileLeft).css("filter", `blur(${randomBlur})`);
     $tileHtml.text(val);
     $("#background").append($tileHtml);
+    this.animateSpawn($tileHtml[0]);
   }
 
-  addTileToDom(tile) {
+  animateSpawn(tile) {
+    console.log(tile);
+    tile.animate({
+      transform: ['scale(0,0)', 'scale(1,1)'],
+    }, {
+      // Apply effect during delay. Avoids flashing effect.
+      fill: 'backwards',
+
+      // Wait some time while move happens
+      delay: 100,
+
+      // Iterations last for 2000ms.
+      duration: 200,
+
+      // The timing function to use with each iteration.
+      easing: 'linear'
+    });
+
 
   }
 
