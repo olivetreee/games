@@ -1,11 +1,14 @@
 @import "./grid.scss";
 @import "./tile.scss";
+@import "./background.scss";
 
 
 .wrapper {
   width: 750px;
   margin: auto;
   padding: 0px 0 30px;
+  background-color: rgba(255,255,255,0.9);
+  height: 100%;
 }
 
 .header {

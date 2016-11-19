@@ -10315,6 +10315,10 @@
 	
 	var _grid2 = _interopRequireDefault(_grid);
 	
+	var _background = __webpack_require__(7);
+	
+	var _background2 = _interopRequireDefault(_background);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10326,6 +10330,7 @@
 	    _classCallCheck(this, Game);
 	
 	    this.grid = grid;
+	    this.background = new _background2.default();
 	
 	    this.keyCodes = {
 	      38: "UP",
@@ -10417,6 +10422,8 @@
 	        // The timing function to use with each iteration.
 	        easing: 'linear'
 	      });
+	
+	      this.background.spawnTile(this.grid.roundPoints);
 	    }
 	  }, {
 	    key: "updateScore",
@@ -28030,6 +28037,54 @@
 		return module;
 	}
 
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _jquery = __webpack_require__(1);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Background = function () {
+	  function Background() {
+	    _classCallCheck(this, Background);
+	  }
+	
+	  _createClass(Background, [{
+	    key: "spawnTile",
+	    value: function spawnTile(val) {
+	      var windowWidth = (0, _jquery2.default)(window).width();
+	      var windowHeight = (0, _jquery2.default)(window).height();
+	      var tileLeft = Math.floor(Math.random() * windowWidth) - 100;
+	      var tileTop = Math.floor(Math.random() * windowHeight) - 100;
+	      var valClass = "val-" + val;
+	      var randomBlur = Math.floor(Math.random() * 10) + 2 + "px";
+	      var $tileHtml = (0, _jquery2.default)("<div class='tile " + valClass + "'>").css("top", tileTop).css("left", tileLeft).css("filter", "blur(" + randomBlur + ")");
+	      $tileHtml.text(val);
+	      (0, _jquery2.default)("#background").append($tileHtml);
+	    }
+	  }, {
+	    key: "addTileToDom",
+	    value: function addTileToDom(tile) {}
+	  }]);
+	
+	  return Background;
+	}();
+	
+	exports.default = Background;
 
 /***/ }
 /******/ ]);

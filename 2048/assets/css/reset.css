@@ -20,9 +20,14 @@ span, article, footer, time, small {
   -moz-osx-font-smoothing: grayscale;*/
 }
 
+html {
+  height: 100%;
+}
+
 body {
   background-color: #e5f7ff;
   font-family: 'Open-Sans', sans-serif;
+  height: 100%;
 }
 
 h1 {

@@ -4,12 +4,14 @@
 
 import $ from "jquery";
 import Grid from "./grid";
+import Background from "./background";
 
 class Game {
 
   constructor(grid) {
 
     this.grid = grid;
+    this.background = new Background();
 
     this.keyCodes = {
       38: "UP",
@@ -95,6 +97,8 @@ class Game {
       // The timing function to use with each iteration.
       easing: 'linear'
     });
+
+    this.background.spawnTile(this.grid.roundPoints);
   }
 
   updateScore() {
