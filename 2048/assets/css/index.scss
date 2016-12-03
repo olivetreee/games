@@ -5,10 +5,22 @@
 
 .wrapper {
   width: 100%;
-  // margin: auto;
-  padding: 0px 0 30px;
   background-color: rgba(255,255,255,0.7);
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 10;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.5);
 }
 
 .header {
@@ -24,14 +36,31 @@ h1 {
   font-size: 60px;
 }
 
+h1 .blue {
+  color: #3498db;
+}
+
+h1 .green {
+  color: #2ecc71;
+}
+
+h1 .purple {
+  color: #9b59b6;
+}
+
+h1 .red {
+  color: #e74c3c;
+}
+
+h2 {
+  font-size: 30px;
+  text-align: center;
+}
+
 .title h1 {
   font-family: 'Audiowide', cursive;
   width: 200px;
   margin: auto;
-}
-
-.title h1:hover {
-  cursor: pointer;
 }
 
 .sub-title {
@@ -62,16 +91,21 @@ h1 {
 }
 
 .new-game-btn {
-  background-color: #34495e;
+  margin: 20px auto;
+  background-color: #27ae60;
   color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 10px;
+  width: 150px;
+  text-align: center;
+  border-radius: 10px;
+  text-shadow: black 0 2px;
+  font-size: 20px;
   transition: background-color 100ms;
   -webkit-transition: background-color 100ms;
 }
 
 .new-game-btn:hover {
-  background-color: #517090;
+  background-color: #2ecc71;
   cursor: pointer;
   transition: background-color 100ms;
   -webkit-transition: background-color 100ms;
@@ -80,6 +114,9 @@ h1 {
 #game {
   font-family: 'Audiowide', cursive;
   position: relative;
+  filter: blur(10px);
+  transition: filter 200ms;
+  -webkit-transition: filter 200ms;
 }
 
 .round-points {
@@ -100,7 +137,6 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Audiowide', cursive;
 }
 
 .game-description {

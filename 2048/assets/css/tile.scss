@@ -36,6 +36,11 @@
   font-size: 25px;
   border-radius: 50px;
   font-family: 'Audiowide', cursive;
+  background-color: #c0392b;
+}
+
+.tile:hover {
+  cursor: default;
 }
 
 .tile-wrapper.merged {

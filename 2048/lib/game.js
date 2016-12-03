@@ -12,6 +12,7 @@ class Game {
 
     this.grid = grid;
     this.background = new Background();
+    this.newSession = true;
 
     this.keyCodes = {
       38: "UP",
@@ -29,8 +30,6 @@ class Game {
 
     this.setKeyListener();
 
-    $(".title h1").click( () => this.newGame() );
-
   }
 
   setKeyListener() {
@@ -41,6 +40,11 @@ class Game {
       if (cheat) {
         this.newKonamiGame();
       } else {
+        if (this.newSession) {
+          $("#game").css("filter", "blur(0px)");
+          $(".overlay").addClass("hidden");
+          this.newSession = false;
+        };
         const keyPressed = this.keyCodes[event.which];
         if (keyPressed) this.playRound(keyPressed)
       }
@@ -78,7 +82,8 @@ class Game {
 
     this.konamiCode.nextKeyIndex = 0;
 
-    $(".game-over").remove();
+    $(".overlay").addClass("hidden");
+    $("#game").css("filter", "blur(0px)");
 
     this.setKeyListener();
 
@@ -107,23 +112,30 @@ class Game {
   }
 
   gameOver() {
-    const $gameOver = $(`<section class="game-over">
+    const $gameOver = $(`<div>
             <h2>Game Over</h2>
-            <h3>Click the logo to start a new game</h3>
-          </section>`)
+            <h3 class="new-game-btn">New Game</h3>
+          </div>`)
 
-    $("#game").append($gameOver);
+    $(".overlay").html($gameOver);
+    $(".overlay").removeClass("hidden");
+    $("#game").css("filter", "blur(10px)");
     $("body").off("keydown");
+    $(".new-game-btn").click( e => this.newGame());
   }
 
   youWin() {
     $("body").off("keydown");
-    const $gameOver = $(`<section class="game-over">
-            <h2>You Win!</h2>
-            <h3>Click the logo to start a new game</h3>
-          </section>`)
+    const $gameOver = $(`<div>
+            <img src="./assets/images/rosebud.gif"/>
+            <h3 class="new-game-btn">New Game</h3>
+          </div>`)
 
-    $("#game").append($gameOver);
+    $(".overlay").html($gameOver);
+    $(".overlay").removeClass("hidden");
+    $("#game").css("filter", "blur(10px)");
+    $("body").off("keydown");
+    $(".new-game-btn").click( e => this.newGame());
   }
 
   removeMerged() {

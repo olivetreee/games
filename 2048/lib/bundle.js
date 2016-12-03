@@ -10325,12 +10325,11 @@
 	
 	var Game = function () {
 	  function Game(grid) {
-	    var _this = this;
-	
 	    _classCallCheck(this, Game);
 	
 	    this.grid = grid;
 	    this.background = new _background2.default();
+	    this.newSession = true;
 	
 	    this.keyCodes = {
 	      38: "UP",
@@ -10347,26 +10346,27 @@
 	    this.gamePoints = 0;
 	
 	    this.setKeyListener();
-	
-	    (0, _jquery2.default)(".title h1").click(function () {
-	      return _this.newGame();
-	    });
 	  }
 	
 	  _createClass(Game, [{
 	    key: "setKeyListener",
 	    value: function setKeyListener() {
-	      var _this2 = this;
+	      var _this = this;
 	
 	      (0, _jquery2.default)("body").keydown(function (event) {
 	        event.preventDefault();
-	        var cheat = _this2.checkKonamiCode(event.which);
+	        var cheat = _this.checkKonamiCode(event.which);
 	
 	        if (cheat) {
-	          _this2.newKonamiGame();
+	          _this.newKonamiGame();
 	        } else {
-	          var keyPressed = _this2.keyCodes[event.which];
-	          if (keyPressed) _this2.playRound(keyPressed);
+	          if (_this.newSession) {
+	            (0, _jquery2.default)("#game").css("filter", "blur(0px)");
+	            (0, _jquery2.default)(".overlay").addClass("hidden");
+	            _this.newSession = false;
+	          };
+	          var keyPressed = _this.keyCodes[event.which];
+	          if (keyPressed) _this.playRound(keyPressed);
 	        }
 	      });
 	    }
@@ -10403,7 +10403,8 @@
 	
 	      this.konamiCode.nextKeyIndex = 0;
 	
-	      (0, _jquery2.default)(".game-over").remove();
+	      (0, _jquery2.default)(".overlay").addClass("hidden");
+	      (0, _jquery2.default)("#game").css("filter", "blur(0px)");
 	
 	      this.setKeyListener();
 	    }
@@ -10434,18 +10435,33 @@
 	  }, {
 	    key: "gameOver",
 	    value: function gameOver() {
-	      var $gameOver = (0, _jquery2.default)("<section class=\"game-over\">\n            <h2>Game Over</h2>\n            <h3>Click the logo to start a new game</h3>\n          </section>");
+	      var _this2 = this;
 	
-	      (0, _jquery2.default)("#game").append($gameOver);
+	      var $gameOver = (0, _jquery2.default)("<div>\n            <h2>Game Over</h2>\n            <h3 class=\"new-game-btn\">New Game</h3>\n          </div>");
+	
+	      (0, _jquery2.default)(".overlay").html($gameOver);
+	      (0, _jquery2.default)(".overlay").removeClass("hidden");
+	      (0, _jquery2.default)("#game").css("filter", "blur(10px)");
 	      (0, _jquery2.default)("body").off("keydown");
+	      (0, _jquery2.default)(".new-game-btn").click(function (e) {
+	        return _this2.newGame();
+	      });
 	    }
 	  }, {
 	    key: "youWin",
 	    value: function youWin() {
-	      (0, _jquery2.default)("body").off("keydown");
-	      var $gameOver = (0, _jquery2.default)("<section class=\"game-over\">\n            <h2>You Win!</h2>\n            <h3>Click the logo to start a new game</h3>\n          </section>");
+	      var _this3 = this;
 	
-	      (0, _jquery2.default)("#game").append($gameOver);
+	      (0, _jquery2.default)("body").off("keydown");
+	      var $gameOver = (0, _jquery2.default)("<div>\n            <img src=\"./assets/images/rosebud.gif\"/>\n            <h3 class=\"new-game-btn\">New Game</h3>\n          </div>");
+	
+	      (0, _jquery2.default)(".overlay").html($gameOver);
+	      (0, _jquery2.default)(".overlay").removeClass("hidden");
+	      (0, _jquery2.default)("#game").css("filter", "blur(10px)");
+	      (0, _jquery2.default)("body").off("keydown");
+	      (0, _jquery2.default)(".new-game-btn").click(function (e) {
+	        return _this3.newGame();
+	      });
 	    }
 	  }, {
 	    key: "removeMerged",
