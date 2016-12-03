@@ -1,7 +1,7 @@
 .grid-container {
   width: 480px;
   margin: auto;
-  border-radius: 5px;
+  border-radius: 60px;
   position: relative;
   z-index: 0;
   padding: 10px;
@@ -168,7 +168,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.5); }
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 60px; }
 
 .header {
   padding: 15px;
