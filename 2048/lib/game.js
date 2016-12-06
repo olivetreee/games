@@ -37,6 +37,7 @@ class Game {
       event.preventDefault();
 
       // Pushing to GTM dataLayer
+      debugger
       dataLayer.push({
         'event': 'keyboardPress'
       });
