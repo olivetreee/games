@@ -35,6 +35,12 @@ class Game {
   setKeyListener() {
     $("body").keydown( event => {
       event.preventDefault();
+
+      // Pushing to GTM
+      dataLayer.push({
+        'event': 'keyboardPress'
+      });
+
       const cheat = this.checkKonamiCode(event.which);
 
       if (cheat) {
