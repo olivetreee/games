@@ -24,6 +24,7 @@
 
 .tile-wrapper {
   display: flex;
+  display: -ms-flexbox;
   justify-content: center;
   align-items: center;
   width: 100px;
@@ -34,10 +35,13 @@
 
 .tile {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100px;
   height: 100px;
   color: white;
   display: flex;
+  display: -ms-flexbox;
   align-items: center;
   justify-content: center;
   font-size: 25px;
@@ -157,6 +161,7 @@
   background-color: rgba(255, 255, 255, 0.7);
   height: 100%;
   display: flex;
+  display: -ms-flexbox;
   align-items: center;
   justify-content: center; }
 
@@ -166,10 +171,14 @@
   width: 500px;
   height: 500px;
   display: flex;
+  display: -ms-flexbox;
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 60px; }
+
+.game-container {
+  position: relative; }
 
 .header {
   padding: 15px;
@@ -204,6 +213,7 @@ h2 {
 
 .sub-title {
   display: flex;
+  display: -ms-flexbox;
   justify-content: space-around;
   align-items: center;
   position: relative; }
@@ -253,7 +263,9 @@ h2 {
 .round-points {
   width: 100%;
   position: absolute;
-  top: 40px; }
+  top: -40px;
+  left: 0;
+  z-index: 1; }
 
 .points-bubble {
   background-color: #3498db;
@@ -265,6 +277,7 @@ h2 {
   margin: auto;
   opacity: 0;
   display: flex;
+  display: -ms-flexbox;
   justify-content: center;
   align-items: center; }
 
@@ -280,6 +293,7 @@ h2 {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 20px;
   display: flex;
+  display: -ms-flexbox;
   justify-content: center;
   align-items: center;
   flex-direction: column; }

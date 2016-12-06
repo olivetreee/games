@@ -15,6 +15,7 @@
 
 .tile-wrapper {
   display: flex;
+  display: -ms-flexbox;
   justify-content: center;
   align-items: center;
   width: 100px;
@@ -26,10 +27,13 @@
 
 .tile {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100px;
   height: 100px;
   color: white;
   display: flex;
+  display: -ms-flexbox;
   align-items: center;
   justify-content: center;
   // z-index: 1;
