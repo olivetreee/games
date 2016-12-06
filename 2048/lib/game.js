@@ -36,7 +36,7 @@ class Game {
     $("body").keydown( event => {
       event.preventDefault();
 
-      // Pushing to GTM
+      // Pushing to GTM dataLayer
       dataLayer.push({
         'event': 'keyboardPress'
       });
