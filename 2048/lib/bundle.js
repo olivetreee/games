@@ -10355,6 +10355,12 @@
 	
 	      (0, _jquery2.default)("body").keydown(function (event) {
 	        event.preventDefault();
+	
+	        // Pushing to GTM dataLayer
+	        dataLayer.push({
+	          'event': 'keyboardPress'
+	        });
+	
 	        var cheat = _this.checkKonamiCode(event.which);
 	
 	        if (cheat) {
