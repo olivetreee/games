@@ -10357,6 +10357,7 @@
 	        event.preventDefault();
 	
 	        // Pushing to GTM dataLayer
+	        var dataLayer = window.dataLayer = window.dataLayer || [];
 	        dataLayer.push({
 	          'event': 'keyboardPress'
 	        });

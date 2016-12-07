@@ -37,6 +37,7 @@ class Game {
       event.preventDefault();
 
       // Pushing to GTM dataLayer
+      let dataLayer = window.dataLayer = window.dataLayer || [];      
       dataLayer.push({
         'event': 'keyboardPress'
       });
