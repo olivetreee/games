@@ -1,0 +1,25 @@
+.wrapper {
+	text-align: center
+	margin: auto;
+	width: 100%;
+}
+
+.header, .row {
+	display: flex;
+	justify-content: center;
+}
+
+.cell {
+	width: 125px;
+	height: 125px;
+	background: green;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: solid 1px red;
+}
+
+.header .cell {
+	height: 75px;
+	background: blue;
+}
