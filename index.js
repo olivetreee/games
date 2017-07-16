@@ -28,7 +28,7 @@ var cellsText = [
 
 function createCellEl(idx) {
 	// var cellEl = document.createElement('div');
-	var cellEl = $('<div class = "cell" id="' + idx + '"></div>');
+	var cellEl = $('<div class = "cell" id="cell-' + idx + '"></div>');
 	cellEl.html(cellsText[idx]);
 	// cellEl.class = "cell";
 	// cellEl.id = "cell-" + idx;
@@ -61,4 +61,37 @@ function renderCard() {
 	wrapperEl.append(baseRowHtml);
 }
 
+function highlightCell(shouldHighlight, idx) {
+	var cellId = "#cell-" + idx;
+	if (shouldHighlight) {
+		$(cellId).addClass("cell-highlight");
+	} else {
+		$(cellId).removeClass("cell-highlight");
+	}
+}
+
+function performSearch(e) {
+	var query = e.target.value;
+	var currentText = "";
+	if (query.length < 3) return;
+	for (idx=0; idx < cellsText.length; idx++) {
+		currentText = cellsText[idx];
+		currentText.indexOf(query) > -1 ? highlightCell(true, idx) : highlightCell(false, idx);
+	}
+}
+
+function setEventHandlers() {
+	var mouseEnterHandler = function(e) {
+		$(e.target).addClass("cell-hover");
+	}
+	var mouseLeaveHandler = function(e) {
+		$(e.target).removeClass("cell-hover");
+	}
+	$(".cell").hover(mouseEnterHandler, mouseLeaveHandler);
+
+	$("#quick-search").keyup(performSearch);
+}
+
+
 renderCard();
+setEventHandlers();

@@ -23,3 +23,11 @@
 	height: 75px;
 	background: blue;
 }
+
+.cell-hover {
+	background: red;
+}
+
+.cell-highlight {
+	background: blue;
+}
