@@ -27,35 +27,38 @@ var cellsText = [
 ].sort(function(a, b){return 0.5 - Math.random()});
 
 function createCellEl(idx) {
-	var cellEl = document.createElement('div');
-	cellEl.className = "cell";
-	cellEl.id = "cell-" + idx;
-	cellEl.innerText = cellsText[idx];
+	// var cellEl = document.createElement('div');
+	var cellEl = $('<div class = "cell" id="' + idx + '"></div>');
+	cellEl.html(cellsText[idx]);
+	// cellEl.class = "cell";
+	// cellEl.id = "cell-" + idx;
+	// cellEl.innerText = cellsText[idx];
 	return cellEl;
 }
 
 function createRowEl(id) {
-	var rowEl = document.createElement('div');
-	rowEl.className = 'row';
-	rowEl.id = 'row-' + id;
+	// var rowEl = document.createElement('div');
+	var rowEl = $('<div class = "row" id="' + id + '"></div>');
+	// rowEl.class = 'row';
+	// rowEl.id = 'row-' + id;
 	return rowEl;
 }
 
 function renderCard() {
 	// var wrapperEl = $('.wrapper');
-	var wrapperEl = document.getElementsByClassName('wrapper')[0];
+	var wrapperEl = $('.wrapper');
 	var rowNum = 0;
 	var baseRowHtml = createRowEl(0);
 	var baseCellHtml;
 	for (idx=0; idx < cellsText.length; idx++) {
 		if (idx%5 === 0 && idx !== 0) {
-			wrapperEl.appendChild(baseRowHtml);
+			wrapperEl.append(baseRowHtml);
 			rowNum++;
 			baseRowHtml = createRowEl(rowNum);
 		}
-		baseRowHtml.appendChild(createCellEl(idx));
+		baseRowHtml.append(createCellEl(idx));
 	}
-	wrapperEl.appendChild(baseRowHtml);
+	wrapperEl.append(baseRowHtml);
 }
 
 renderCard();
