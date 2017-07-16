@@ -20,7 +20,7 @@ var cellsText = [
 	"I'm sorry, you cut out there",
 	"Can we take this offline?",
 	"I'll have to get back to you on that one",
-	"Can everyone see my screen",
+	"Can everyone see my screen?",
 	"Sorry, I'm/was having connection issues",
 	"I think there's a lag",
 	"Sorry, didn't catch that, can you repeat?"
@@ -70,14 +70,29 @@ function highlightCell(shouldHighlight, idx) {
 	}
 }
 
+function resetCells() {
+	for (idx=0; idx < cellsText.length; idx++) {
+		var cellId = "#cell-" + idx;
+		$(cellId).removeClass("cell-highlight");
+	}
+}
+
 function performSearch(e) {
 	var query = e.target.value;
+	if (query.length < 3) return resetCells();
 	var currentText = "";
-	if (query.length < 3) return;
+	var regexQuery = new RegExp(query.split(" ").join('.*'), 'i');
 	for (idx=0; idx < cellsText.length; idx++) {
-		currentText = cellsText[idx];
-		currentText.indexOf(query) > -1 ? highlightCell(true, idx) : highlightCell(false, idx);
+		currentText = cellsText[idx].toLowerCase();
+		currentText.search(regexQuery) > -1 ? highlightCell(true, idx) : highlightCell(false, idx);
 	}
+}
+
+function clickHandler(e) {
+	var cell = e.target;
+	$(cell).toggleClass("cell-select");
+	$("#quick-search")[0].value = "";
+	resetCells();
 }
 
 function setEventHandlers() {
@@ -88,6 +103,8 @@ function setEventHandlers() {
 		$(e.target).removeClass("cell-hover");
 	}
 	$(".cell").hover(mouseEnterHandler, mouseLeaveHandler);
+
+	$(".cell").click(clickHandler);
 
 	$("#quick-search").keyup(performSearch);
 }
