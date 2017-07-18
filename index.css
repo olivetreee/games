@@ -1,7 +1,11 @@
-.wrapper {
+.card-wrapper {
 	text-align: center
 	margin: auto;
 	width: 100%;
+}
+
+.hide-wrapper {
+	display: none;
 }
 
 .header, .row {

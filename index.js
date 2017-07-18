@@ -45,20 +45,20 @@ function createRowEl(id) {
 }
 
 function renderCard() {
-	// var wrapperEl = $('.wrapper');
-	var wrapperEl = $('.wrapper');
+	// var cardWrapperEl = $('.card-wrapper');
+	var cardWrapperEl = $('.card-wrapper');
 	var rowNum = 0;
 	var baseRowHtml = createRowEl(0);
 	var baseCellHtml;
 	for (idx=0; idx < cellsText.length; idx++) {
 		if (idx%5 === 0 && idx !== 0) {
-			wrapperEl.append(baseRowHtml);
+			cardWrapperEl.append(baseRowHtml);
 			rowNum++;
 			baseRowHtml = createRowEl(rowNum);
 		}
 		baseRowHtml.append(createCellEl(idx));
 	}
-	wrapperEl.append(baseRowHtml);
+	cardWrapperEl.append(baseRowHtml);
 }
 
 function highlightCell(shouldHighlight, idx) {
@@ -70,7 +70,7 @@ function highlightCell(shouldHighlight, idx) {
 	}
 }
 
-function resetCells() {
+function resetCellHighlights() {
 	for (idx=0; idx < cellsText.length; idx++) {
 		var cellId = "#cell-" + idx;
 		$(cellId).removeClass("cell-highlight");
@@ -79,7 +79,7 @@ function resetCells() {
 
 function performSearch(e) {
 	var query = e.target.value;
-	if (query.length < 3) return resetCells();
+	if (query.length < 3) return resetCellHighlights();
 	var currentText = "";
 	var regexQuery = new RegExp(query.split(" ").join('.*'), 'i');
 	for (idx=0; idx < cellsText.length; idx++) {
@@ -88,11 +88,41 @@ function performSearch(e) {
 	}
 }
 
+// For every click, I have to check:
+// * all cells in row;
+// * all cells in col;
+// * all cells in diagonals
+// (might not make sense to check if cell is in diagonals, since card is small)
+
+function hitBingo(cell) {
+
+	var checkLine = function(start, inc) {
+		var currentCellMarked;
+		for (var count = 1; count <= 5; count++) {
+			if (!($("#cell-"+start).hasClass("cell-select"))) return false;
+			start += inc;
+		}
+		return true;
+	}
+
+	var cellId = parseInt(cell.id.split("-")[1]);
+	var startRow = Math.floor(cellId/5) * 5;
+	var startCol = cellId%5;
+	return checkLine(startRow, 1) || checkLine(startCol, 5) || checkLine(0, 6) || checkLine(4, 4);
+}
+
+function gameOver() {
+	$('.card-wrapper').addClass('hide-wrapper');
+	$('.win-prize').removeClass('hide-wrapper')
+	console.log('GAME OVER!!');
+}
+
 function clickHandler(e) {
 	var cell = e.target;
 	$(cell).toggleClass("cell-select");
 	$("#quick-search")[0].value = "";
-	resetCells();
+	if (hitBingo(cell)) return gameOver() ;
+	resetCellHighlights();
 }
 
 function setEventHandlers() {
