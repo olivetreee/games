@@ -5,7 +5,7 @@ var cellsText = [
 	"Uh, _____, you're still sharing...",
 	"Hey, everyone, I have to jump t another call",
 	"(sounds of someone typing, possibly with a hammer)",
-	"(loud, painful echo/feedback)",
+	"(loud, painful echo and/or feedback)",
 	"(child or animal noises)",
 	"Hi, can you all hear me?",
 	"Nope, it's still loading",
@@ -27,7 +27,6 @@ var cellsText = [
 ].sort(function(a, b){return 0.5 - Math.random()});
 
 function createCellEl(idx) {
-	// var cellEl = document.createElement('div');
 	var cellEl = $('<div class = "cell" id="cell-' + idx + '"></div>');
 	cellEl.html(cellsText[idx]);
 	// cellEl.class = "cell";
@@ -78,6 +77,12 @@ function resetCellHighlights() {
 }
 
 function performSearch(e) {
+	if (e.keyCode === 27) {
+		$("#quick-search")[0].value = "";
+		resetCellHighlights();
+		return;
+	}
+
 	var query = e.target.value;
 	if (query.length < 3) return resetCellHighlights();
 	var currentText = "";
@@ -99,7 +104,7 @@ function hitBingo(cell) {
 	var checkLine = function(start, inc) {
 		var currentCellMarked;
 		for (var count = 1; count <= 5; count++) {
-			if (!($("#cell-"+start).hasClass("cell-select"))) return false;
+			if (!($("#cell-"+start).hasClass("cell-mark"))) return false;
 			start += inc;
 		}
 		return true;
@@ -119,7 +124,7 @@ function gameOver() {
 
 function clickHandler(e) {
 	var cell = e.target;
-	$(cell).toggleClass("cell-select");
+	$(cell).toggleClass("cell-mark");
 	$("#quick-search")[0].value = "";
 	if (hitBingo(cell)) return gameOver() ;
 	resetCellHighlights();
@@ -132,11 +137,12 @@ function setEventHandlers() {
 	var mouseLeaveHandler = function(e) {
 		$(e.target).removeClass("cell-hover");
 	}
-	$(".cell").hover(mouseEnterHandler, mouseLeaveHandler);
+	// $(".cell").hover(mouseEnterHandler, mouseLeaveHandler);
 
 	$(".cell").click(clickHandler);
 
 	$("#quick-search").keyup(performSearch);
+
 }
 
 

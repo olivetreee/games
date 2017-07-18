@@ -1,7 +1,31 @@
-.card-wrapper {
-	text-align: center
+body {
+	font-family: Oldenburg;
+	text-align: center;
+}
+
+#quick-search {
+	border: 0;
+	font-size: 25px;
+	border-bottom: solid 1px black;
+	margin-bottom: 10px;
+	text-align: center;
+	width: 400px;
+	font-family: Oldenburg;
+}
+
+#quick-search:focus {
+	outline: none;
+}
+
+.main-wrapper {
+	text-align: center;
 	margin: auto;
-	width: 100%;
+	width: 625px;
+}
+
+.card-wrapper {
+	width: 625px;
+	border: solid 1px black;
 }
 
 .hide-wrapper {
@@ -16,11 +40,45 @@
 .cell {
 	width: 125px;
 	height: 125px;
-	background: green;
+	color: #34495e;
+	background: #ecf0f1;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: solid 1px red;
+	border: solid 1px black;
+	padding: 0 5px;
+	font-size: 15px;
+	position: relative;
+}
+
+
+.cell-mark:before {
+	width: 95px;
+	height: 95px;
+	background: transparent;
+	content: "";
+	border-radius: 60px;
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	border: solid 3px rgba(231, 76, 60, 0.78);
+}
+
+.cell-mark:after {
+	width: 85px;
+	height: 85px;
+	background: rgba(231, 76, 60, 0.78);
+	content: "";
+	border-radius: 50px;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+}
+
+.cell:hover {
+	cursor: pointer;
+	color: #34495e;
+	background: #bdc3c7;
 }
 
 .header .cell {
@@ -28,14 +86,7 @@
 	background: blue;
 }
 
-.cell-hover {
-	background: red;
-}
-
 .cell-highlight {
-	background: blue;
-}
-
-.cell-select {
-	background: yellow;
+	color: #ecf0f1;
+	background: #3498db;
 }
