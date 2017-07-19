@@ -104,7 +104,7 @@ function hitBingo(cell) {
 	var checkLine = function(start, inc) {
 		var currentCellMarked;
 		for (var count = 1; count <= 5; count++) {
-			if (!($("#cell-"+start).hasClass("cell-mark"))) return false;
+			if (!($("#cell-"+start).hasClass("cell-marked"))) return false;
 			start += inc;
 		}
 		return true;
@@ -124,7 +124,7 @@ function gameOver() {
 
 function clickHandler(e) {
 	var cell = e.target;
-	$(cell).toggleClass("cell-mark");
+	$(cell).toggleClass("cell-marked");
 	$("#quick-search")[0].value = "";
 	if (hitBingo(cell)) return gameOver() ;
 	resetCellHighlights();
