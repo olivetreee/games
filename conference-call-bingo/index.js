@@ -126,7 +126,7 @@ function clickHandler(e) {
 	var cell = e.target;
 	$(cell).toggleClass("cell-marked");
 	$("#quick-search")[0].value = "";
-	$("#quick-search")[0].focus();
+	$("#quick-search").focus();
 	if (hitBingo(cell)) return gameOver() ;
 	resetCellHighlights();
 }
