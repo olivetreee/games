@@ -3,7 +3,7 @@ var cellsText = [
 	"Can you e-mail that to everyone?",
 	"_____, are you there?",
 	"Uh, _____, you're still sharing...",
-	"Hey, everyone, I have to jump t another call",
+	"Hey, everyone, I have to jump to another call",
 	"(sounds of someone typing, possibly with a hammer)",
 	"(loud, painful echo and/or feedback)",
 	"(child or animal noises)",
