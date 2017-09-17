@@ -61,6 +61,7 @@ class Board
   end
 
   # this is another PR test
+  # this is a new line
   
   def one_side_empty?
     cups_1_empty = @cups[0..5].all?(&:empty?)
