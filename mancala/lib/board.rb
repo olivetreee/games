@@ -1,4 +1,5 @@
 require 'byebug'
+# this is just a PR test
 class Board
   attr_accessor :cups
 
@@ -37,7 +38,6 @@ class Board
 
     self.render
     self.next_turn(cup_selected,current_player_name)
-
   end
 
   def next_turn(ending_cup_idx,current_player_name)
@@ -59,6 +59,8 @@ class Board
     puts ""
   end
 
+  # this is another PR test
+  
   def one_side_empty?
     cups_1_empty = @cups[0..5].all?(&:empty?)
     cups_2_empty = @cups[7..12].all?(&:empty?)
