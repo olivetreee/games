@@ -38,7 +38,6 @@ class Board
 
     self.render
     self.next_turn(cup_selected,current_player_name)
-
   end
 
   def next_turn(ending_cup_idx,current_player_name)
